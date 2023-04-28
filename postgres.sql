@@ -32,12 +32,18 @@ CREATE TABLE quiz (
     id serial not null,
     description varchar(255) not null,
     date_create timestamp,
-    minimum_score int not null
+    minimum_score int not null,
+    developer_id int not null
 );
 
 ALTER TABLE quiz 
 ADD CONSTRAINT pk_quiz
 PRIMARY KEY(id);
+
+ALTER TABLE quiz
+ADD CONSTRAINT fk_quiz_developer
+FOREIGN KEY(developer_id)
+REFERENCES developer(id);
 
 -- Tabela "question"
 CREATE TABLE question (
@@ -125,6 +131,7 @@ CREATE TABLE offer (
     id serial not null,
     date timestamp,
     quiz_id int not null
+    respondent_id int not null
 );
 
 ALTER TABLE offer 
@@ -135,6 +142,11 @@ ALTER TABLE offer
 ADD CONSTRAINT fk_offer_quiz
 FOREIGN KEY(quiz_id)
 REFERENCES quiz(id);
+
+ALTER TABLE offer
+ADD CONSTRAINT fk_offer_respondent
+FOREIGN KEY(respondent_id)
+REFERENCES respondent(id);
 
 -- Tabela "submission"
 CREATE TABLE submission (
