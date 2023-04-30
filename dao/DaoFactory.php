@@ -1,6 +1,7 @@
 <?php
-abstract class DaoFactory {
 
+abstract class DaoFactory {
     protected abstract function getConnection();
 }
+
 ?>

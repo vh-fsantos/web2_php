@@ -1,14 +1,14 @@
 <?php 
 
-include_once("../abstractions/DeveloperDao.php");
+include_once("../abstractions/RespondentDao.php");
 include_once("../DAO.php");
 
-class PostgresDeveloperDao extends DAO implements DeveloperDao
+class PostgresRespondentDao extends DAO implements RespondentDao
 {
 
-    private $table_name = 'developer';
+    private $table_name = 'respondent';
     
-    public function insert($developer) {
+    public function insert($respondent) {
 
         $query = "INSERT INTO " . $this->table_name . 
         " (login, password, email, institution, is_admin, name) VALUES" .
@@ -16,12 +16,12 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":login", $developer->getLogin());
-        $stmt->bindParam(":password", md5($developer->getPassword()));
-        $stmt->bindParam(":email", $developer->getEmail());
-        $stmt->bindParam(":institution", $developer->getInstitution());
-        $stmt->bindParam(":is_admin", $developer->isAdmin());
-        $stmt->bindParam(":name", $developer->getName());
+        $stmt->bindParam(":login", $respondent->getLogin());
+        $stmt->bindParam(":password", md5($respondent->getPassword()));
+        $stmt->bindParam(":email", $respondent->getEmail());
+        $stmt->bindParam(":institution", $respondent->getInstitution());
+        $stmt->bindParam(":is_admin", $respondent->isAdmin());
+        $stmt->bindParam(":name", $respondent->getName());
 
         if($stmt->execute())
             return true;

@@ -1,6 +1,6 @@
 <?php
 
-include_once('DaoFactory.php');
+include_once('../DaoFactory.php');
 
 class PostgresDaofactory extends DaoFactory {
 
