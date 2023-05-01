@@ -27,10 +27,10 @@ if ($developer)
         $_SESSION["userId"]= $developer->getId(); 
         $_SESSION["username"] = stripslashes($developer->getName()); 
         $_SESSION["userType"]= "developer";
-        $_SESSION["isAdmin"]= TRUE;
+        $_SESSION["isAdmin"]= $developer->getIsAdmin();
         header("location: /index.php");
         exit;
-    } 
+    }
     else
         $errors = TRUE;
 }
