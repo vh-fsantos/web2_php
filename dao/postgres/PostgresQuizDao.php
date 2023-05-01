@@ -9,8 +9,6 @@ class PostgresQuizDao extends DAO implements QuizDao {
     
     public function create($quiz) {
 
-        var_dump($quiz);
-
         $query = "INSERT INTO " . $this->table_name . 
             " (description, date_create, minimum_score) VALUES" .
             " (:description, NOW(), :minimum_score)";

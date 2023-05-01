@@ -10,16 +10,14 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
     public function create($question) {
 
         $query = "INSERT INTO " . $this->table_name .
-            " (description, is_essay, is_multiple_choice, is_single_choice, image) VALUES" .
-            " (:description, :is_essay, :is_multiple_choice, :is_single_choice, :image)";
+            " (description, question_type, image) VALUES" .
+            " (:description, :question_type, :image)";
 
         $stmt = $this->conn->prepare($query);
 
         // bind values
         $stmt->bindParam(":description", $question->getDescription());
-        $stmt->bindParam(":is_essay", $question->getIsEssay());
-        $stmt->bindParam(":is_multiple_choice", $question->getIsMultipleChoice());
-        $stmt->bindParam(":is_single_choice", $question->getIsSingleChoice());
+        $stmt->bindParam(":question_type", $question->getIsEssay());
         $stmt->bindParam(":image", $question->getImage());
 
         if($stmt->execute()){
@@ -53,16 +51,14 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
     public function update($question) {
 
         $query = "UPDATE " . $this->table_name .
-        " SET description = :description, is_essay = :is_essay, is_multiple_choice = :is_multiple_choice, is_single_choice = :is_single_choice, image = :image" .
+        " SET description = :description, question_type = :question_type, image = :image" .
         " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
         $stmt->bindParam(":description", $question->getDescription());
-        $stmt->bindParam(":is_essay", $question->getIsEssay());
-        $stmt->bindParam(":is_multiple_choice", $question->getIsMultipleChoice());
-        $stmt->bindParam(":is_single_choice", $question->getIsSingleChoice());
+        $stmt->bindParam(":question_type", $question->getIsEssay());
         $stmt->bindParam(":image", $question->getImage());
         $stmt->bindParam(':id', $question->getId());
 
@@ -79,7 +75,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
         $question = null;
 
         $query = "SELECT
-                    id, description, is_essay, is_multiple_choice, is_single_choice, image
+                    id, description, question_type, image
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -93,7 +89,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $question = new Question($row['id'],$row['description'], $row['is_essay'], $row['is_multiple_choice'], $row['is_single_choice'], $row['image']);
+            $question = new Question($row['id'],$row['description'], $row['question_type'], $row['image']);
         }
 
         return $question;
@@ -104,7 +100,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
         $questions = array();
 
         $query = "SELECT
-                    id, description, is_essay, is_multiple_choice, is_single_choice, image
+                    id, description, question_type, image
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -114,7 +110,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $questions[] = new Question($id,$description,$is_essay,$is_multiple_choice,$is_single_choice,$image);
+            $questions[] = new Question($id,$description,$question_type,$image);
         }
         
         return $questions;
