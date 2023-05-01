@@ -17,13 +17,13 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
         // bind values
         $stmt->bindParam(":description", $question->getDescription());
-        $stmt->bindParam(":question_type", $question->getIsEssay());
+        $stmt->bindParam(":question_type", $question->getQuestionType());
         $stmt->bindParam(":image", $question->getImage());
 
         if($stmt->execute()){
-            return true;
+            return $this->conn->lastInsertId();;
         }else{
-            return false;
+            return -1;
         }
     }
 
@@ -58,7 +58,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
         // bind parameters
         $stmt->bindParam(":description", $question->getDescription());
-        $stmt->bindParam(":question_type", $question->getIsEssay());
+        $stmt->bindParam(":question_type", $question->getQuestionType());
         $stmt->bindParam(":image", $question->getImage());
         $stmt->bindParam(':id', $question->getId());
 

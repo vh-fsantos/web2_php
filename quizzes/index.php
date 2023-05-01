@@ -16,7 +16,7 @@ require_once "../common/header.php";
 
   <div class="container">
     <h1 class="mt-4 mb-4">Registro de Questionários</h1>
-    <form action="quiz/create_update.php" method=post>
+    <form action="quizzes/create_update.php" method=post>
       <div class="form-group">
         <label for="name">Nome:</label>
         <input name="name" type="text" class="form-control" id="name" placeholder="Digite o nome do questionário">

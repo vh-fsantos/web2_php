@@ -1,24 +1,31 @@
 <?php 
 
-require_once("../dao/abstractions/QuizDao.php");
+require_once("../dao/abstractions/AlternativeDao.php");
 require_once("../dao/DAO.php");
 
-class PostgresQuizDao extends DAO implements QuizDao {
+class PostgresAlternativeDao extends DAO implements AlternativeDao {
 
-    private $table_name = 'quiz';
+    private $table_name = 'alternative';
     
-    public function create($quiz) {
+    public function create($alternative) {
+
+        var_dump($alternative);
 
         $query = "INSERT INTO " . $this->table_name . 
-            " (description, date_create, minimum_score, developer_id) VALUES" .
-            " (:description, NOW(), :minimum_score, :developer_id)";
+            " (description, is_correct, question_id) VALUES" .
+            " (:description, :is_correct, :question_id)";
     
         $stmt = $this->conn->prepare($query);
     
         // bind values 
-        $stmt->bindParam(":description", $quiz->getDescription());
-        $stmt->bindParam(":minimum_score", $quiz->getMinimumScore());
-        $stmt->bindParam(":developer_id", $quiz->getDeveloper()->getId());
+        $stmt->bindParam(":description", $alternative->getDescription());
+        $isCorrect = $alternative->getIsCorrect();
+        if (isset($isCorrect)) {
+            $stmt->bindParam(":is_correct", $isCorrect, PDO::PARAM_BOOL);
+        } else {
+            $stmt->bindValue(":is_correct", null, PDO::PARAM_NULL);
+        }
+        $stmt->bindParam(":question_id", $alternative->getQuestion()->getId());
     
         if($stmt->execute()){
             return true;
@@ -44,22 +51,23 @@ class PostgresQuizDao extends DAO implements QuizDao {
         return false;
     }
 
-    public function remove($quiz) {
-        return $this->removeById($quiz->getId());
+    public function remove($alternative) {
+        return $this->removeById($alternative->getId());
     }
 
-    public function update($quiz) {
+    public function update($alternative) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET description = :description, minimum_score = :minimum_score" .
+        " SET description = :description, is_correct = :is_correct, question_id = :question_id" .
         " WHERE id = :id";
     
         $stmt = $this->conn->prepare($query);
     
         // bind parameters
-        $stmt->bindParam(":description", $quiz->getDescription());
-        $stmt->bindParam(":minimum_score", $quiz->getMinimumScore());
-        $stmt->bindParam(':id', $quiz->getId());
+        $stmt->bindParam(":description", $alternative->getDescription());
+        $stmt->bindParam(":is_correct", $alternative->getIsCorrect());
+        $stmt->bindParam(":question_id", $alternative->getQuestion()->getId());
+        $stmt->bindParam(':id', $alternative->getId());
     
         // execute the query
         if($stmt->execute()){
@@ -71,10 +79,10 @@ class PostgresQuizDao extends DAO implements QuizDao {
 
     public function findById($id) {
         
-        $quiz = null;
+        $alternative = null;
 
         $query = "SELECT
-                    id, description, minimum_score, date_create
+                    id, description, is_correct
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -88,18 +96,18 @@ class PostgresQuizDao extends DAO implements QuizDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $quiz = new Quiz($row['id'],$row['description'], $row['minimum_score'], $row['date_create']);
+            $alternative = new Alternative($row['id'],$row['description'], $row['is_correct']);
         } 
      
-        return $quiz;
+        return $alternative;
     }
 
     public function findAll() {
 
-        $quizes = array();
+        $alternativees = array();
 
         $query = "SELECT
-                    id, description, minimum_score, date_create
+                    id, description, is_correct
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -109,10 +117,10 @@ class PostgresQuizDao extends DAO implements QuizDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $quizes[] = new Quiz($id,$description,$minimum_score,$date_create);
+            $alternativees[] = new Alternative($id,$description,$is_correct);
         }
         
-        return $quizes;
+        return $alternativees;
     }
 }
 

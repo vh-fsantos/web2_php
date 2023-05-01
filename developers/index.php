@@ -9,7 +9,7 @@ include_once("../common/header.php");
       <div class="row justify-content-center">
         <div class="col-md-6">
           <h2 class="mb-4">Registro de Usuário</h2>
-          <form action="create.php" method="get">
+          <form action="/developers/create.php" method="post">
             <div class="form-group">
               <label for="login">Login</label>
               <input type="text" class="form-control" id="login" name="login" required>

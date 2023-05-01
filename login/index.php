@@ -21,7 +21,7 @@ if (isset($_SESSION["username"]))
                     <h2 class="text-center">Developer Login</h2>
                 </div>
                 <div class="card-body">
-                    <form action="developer-login.php" method="post">
+                    <form action="/login/developer-login.php" method="post">
                         <div class="form-group">
                             <label for="login">Login:</label>
                             <input type="text" name="login" id="login" class="form-control" required>
@@ -41,7 +41,7 @@ if (isset($_SESSION["username"]))
                     <h2 class="text-center">Respondent Login</h2>
                 </div>
                 <div class="card-body">
-                    <form action="respondent-login.php" method="post">
+                    <form action="/login/respondent-login.php" method="post">
                         <div class="form-group">
                             <label for="login">Login:</label>
                             <input type="text" name="login" id="login" class="form-control" required>
