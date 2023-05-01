@@ -38,6 +38,9 @@ if (isset($_SESSION["userType"]))
                     echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/questions/list.php">Questões</a>';
                     echo '</li>';
+                    echo '<li class="nav-item">';
+                    echo '<a class="nav-link" href="/offers">Ofertas</a>';
+                    echo '</li>';
                 }?>
             </ul>
         </div>
