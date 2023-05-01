@@ -1,5 +1,5 @@
 <?php 
-$page_title = "Questionários";
+$page_title = "Elaboradores";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");

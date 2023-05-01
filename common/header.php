@@ -11,21 +11,19 @@
 
 <body>
 	<header>
-		<h1><?=$page_title?></h1>
 		<div class="pull-right" id="login_info">
 		<?php	
-		// include_once "common.php";
+		include_once "common.php";
 		
-		// if (is_session_started() === FALSE ) {
-		// 	session_start();
-		// }	
+		if (is_session_started() === FALSE ) 
+			session_start();
 		
-		// if(isset($_SESSION["nome_usuario"])) {
-		// 	echo "<span>Você está logado como " . $_SESSION["nome_usuario"];		
-		// 	echo "<a href='executa_logout.php'> Logout </a></span>";
-		// } else {
-		// 	echo "<span><a href='login.php'> Efetuar Login </a></span>";
-		// }
+		if(isset($_SESSION["username"])) {
+			echo "<span>Você está logado como " . $_SESSION["username"];		
+			echo "<a href='executa_logout.php'> Logout </a></span>";
+		} else {
+			echo "<span>Desconectado</span>";
+		}
 		?>	
 		</div>
 	</header>
