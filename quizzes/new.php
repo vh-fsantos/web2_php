@@ -1,7 +1,7 @@
 <?php
 require_once "../common/facade.php";
 
-$page_title = "Questionarios";
+$page_title = "Questionários - Novo";
 require_once "../common/header.php";
 
 ?>

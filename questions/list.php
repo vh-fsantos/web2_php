@@ -41,11 +41,11 @@ if ($questions) {
 		echo "<td>{$question->getQuestionType()}</td>";
 		echo "<td>";
 		// botão para alterar uma questão
-		echo "<a href='modifica_question.php?id={$question->getId()}' class='btn btn-info'>";
+		echo "<a href='/questions/edit.php?id={$question->getId()}' class='btn btn-info'>";
 		echo "<span class='fas fa-edit'></span> Alterar";
 		echo "</a>";
 		// botão para remover uma questão
-		echo "<a href='remove_question.php?id={$question->getId()}' class='btn btn-danger'";
+		echo "<a href='/questions/delete.php?id={$question->getId()}' class='btn btn-danger'";
 		echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
 		echo "<span class='fas fa-trash'></span> Excluir";
 		echo "</a>";

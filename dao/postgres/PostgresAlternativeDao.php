@@ -122,6 +122,29 @@ class PostgresAlternativeDao extends DAO implements AlternativeDao {
         
         return $alternativees;
     }
+
+    public function findAllByQuestionId($question_id) {
+
+            $alternatives = array();
+    
+            $query = "SELECT
+                        id, description, is_correct
+                    FROM
+                        " . $this->table_name . 
+                        " WHERE question_id = :question_id
+                        ORDER BY id ASC";
+        
+            $stmt = $this->conn->prepare( $query );
+            $stmt->bindParam(":question_id", $question_id);
+            $stmt->execute();
+    
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                extract($row);
+                $alternatives[] = new Alternative($id,$description,$is_correct);
+            }
+            
+            return $alternatives;
+    }
 }
 
 

@@ -8,6 +8,7 @@ interface AlternativeDao
     public function update($alternative);
     public function findById($id);
     public function findAll();
+    public function findAllByQuestionId($question_id);
 }
 
 ?>

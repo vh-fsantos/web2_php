@@ -28,19 +28,22 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
     }
 
     public function removeById($id) {
-        $query = "DELETE FROM " . $this->table_name .
-        " WHERE id = :id";
 
-        $stmt = $this->conn->prepare($query);
-
-        // bind parameters
-        $stmt->bindParam(':id', $id);
-
-        // execute the query
-        if($stmt->execute()){
+        // delete all quiz questions for this quiz
+        $query_quiz_question = "DELETE FROM quiz_question WHERE question_id = :question_id";
+        $stmt_quiz_question = $this->conn->prepare($query_quiz_question);
+        $stmt_quiz_question->bindParam(':question_id', $id);
+        $stmt_quiz_question->execute();
+    
+        // delete the quiz
+        $query_question = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $stmt_question = $this->conn->prepare($query_question);
+        $stmt_question->bindParam(':id', $id);
+    
+        if ($stmt_question->execute()) {
             return true;
         }
-
+    
         return false;
     }
 

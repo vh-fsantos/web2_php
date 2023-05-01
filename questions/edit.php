@@ -1,7 +1,19 @@
 <?php
 require_once "../common/facade.php";
 
-$page_title = "Questões - Novo";
+$id = @$_GET["id"];
+
+$dao = $factory->getQuestionDao();
+$question = $dao->findById($id);
+if($question==null) {
+    $question = new Question(null,null, null, null, null, null);
+}
+
+$dao_alternative = $factory->getAlternativeDao();
+$alternatives = $dao_alternative->findAllByQuestionId($id);
+
+
+$page_title = "Questões - Editar";
 require_once "../common/header.php";
 
 ?>
@@ -22,15 +34,15 @@ require_once "../common/header.php";
 		<form method="POST" action="/questions/create_update.php" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="description">Descrição:</label>
-				<textarea class="form-control" id="description" name="description" required></textarea>
+				<textarea class="form-control" id="description" name="description" required><?php echo $question->getDescription();?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="question_type">Tipo de resposta:</label>
 				<select class="form-control" id="question_type" name="question_type" required>
 					<option value="">Selecione um tipo de resposta</option>
-					<option value="essay">Dissertativa</option>
-					<option value="single_choice">Escolha Única</option>
-					<option value="multiple_choice">Escolha Múltipla</option>
+					<option value="essay" <?php if ($question->getQuestionType() == "essay") echo "selected"; ?>>Dissertativa</option>
+					<option value="single_choice" <?php if ($question->getQuestionType() == "single_choice") echo "selected"; ?>>Escolha Única</option>
+					<option value="multiple_choice" <?php if ($question->getQuestionType() == "multiple_choice") echo "selected"; ?>>Escolha Múltipla</option>
 				</select>
 			</div>
 
@@ -38,6 +50,17 @@ require_once "../common/header.php";
 					<label>Alternatives:</label>
           <button type="button" class="add_button btn btn-success">Adicionar alternativa</button>
           <ul class="list-group">
+					<?php foreach ($alternatives as $index => $alternative) { ?>
+							<li class="list-group-item alternative">
+									<?php if ($question->getQuestionType() === 'single_choice') { ?>
+											<input type="radio" name="correct_alternative" value="<?= $index ?>" <?= $alternative->getIsCorrect() ? 'checked' : '' ?>>
+									<?php } else if ($question->getQuestionType() === 'multiple_choice') { ?>
+											<input type="checkbox" name="is_correct[]" value="<?= $index ?>" <?= $alternative->getIsCorrect() ? 'checked' : '' ?>>
+									<?php } ?>
+									<input type="text" class="form-control" name="alternatives[]" value="<?= $alternative->getDescription() ?>" placeholder="Digite uma alternative">
+									<button type="button" class="remove_button btn btn-danger">Remover</button>
+							</li>
+					<?php } ?>
           </ul>
 			</div>
 			
@@ -52,7 +75,10 @@ require_once "../common/header.php";
 		<script>
 		$(document).ready(function() {
 			// Esconde a div de alternatives no carregamento da página
-			$('#alternatives').hide();
+			<?php if ($question->getQuestionType() !== 'single_choice' && $question->getQuestionType() !== 'multiple_choice') { ?>
+				$('#alternatives').hide();
+			<?php } ?>
+			
 
 			// Mostra ou esconde a div de alternatives quando o tipo de resposta é escolha única ou múltipla
 			$('#question_type').on('change', function() {

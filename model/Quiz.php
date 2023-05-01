@@ -6,6 +6,7 @@ class Quiz {
     private $description;
     private $minimumScore;
     private $dateCreate;
+    private $developer;
 
     public function __construct($id, $name, $description, $minimumScore, $dateCreate)
     {

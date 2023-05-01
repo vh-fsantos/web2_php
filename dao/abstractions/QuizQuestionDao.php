@@ -9,7 +9,7 @@ interface QuizQuestionDao {
     public function update($quiz_question);
     public function findById($id);
     // public function findByQuestionId($questionId);
-    // public function findByQuizId($quizId);
+    public function findAllByQuizId($quiz_id);
     public function findAll();
 }
 

@@ -4,6 +4,7 @@ class Alternative {
     private $id;
     private $description;
     private $isCorrect;
+    private $question;
 
     public function __construct($id, $description, $isCorrect)
     {

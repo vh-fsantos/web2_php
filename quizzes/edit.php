@@ -9,7 +9,15 @@ if($quiz==null) {
     $quiz = new Quiz(null,null,null, null, null);
 }
 
-$page_title = "Questionários";
+$dao_quiz_question = $factory->getQuizQuestionDao();
+$quiz_questions = $dao_quiz_question->findAllByQuizId($id);
+
+foreach ($quiz_questions as $quiz_question) {
+    $quiz_question_ids[] = $quiz_question->getQuestion()->getId();
+}
+
+
+$page_title = "Questionários - Editar";
 require_once "../common/header.php";
 ?>
 
@@ -50,7 +58,11 @@ require_once "../common/header.php";
           $questions = $dao_question->findAll();
           foreach ($questions as $question) {
               echo "<tr>";
-              echo "<td><input type='checkbox' name='question_ids[]' value='{$question->getId()}'></td>";
+              echo "<td><input type='checkbox' name='question_ids[]' value='{$question->getId()}'";
+              if (isset($quiz_question_ids) && (in_array($question->getId(), $quiz_question_ids))) {
+                  echo " checked";
+              }
+              echo "></td>";
               echo "<td>{$question->getId()}</td>";
               echo "<td>{$question->getDescription()}</td>";
               echo "<td>{$question->getQuestionType()}</td>";

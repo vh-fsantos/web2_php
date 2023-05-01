@@ -4,6 +4,8 @@ class QuizQuestion {
     private $id;
     private $score;
     private $order;
+    private $quiz;
+    private $question;
 
     public function __construct($id, $score, $order)
     {

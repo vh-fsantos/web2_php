@@ -49,6 +49,9 @@ if($quiz===null) {
     $quiz->setMinimumScore($minimum_score);
     $dao->update($quiz);
 
+    $dao_quiz_question = $factory->getQuizQuestionDao();
+    $dao_quiz_question->removeByQuizId(intval($quiz->getId()));
+
     addQuestionsToQuiz($question_ids, $quiz, $factory);
 }
 

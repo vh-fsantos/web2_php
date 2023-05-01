@@ -1,6 +1,8 @@
 <?php 
 
 require_once("../dao/abstractions/QuizQuestionDao.php");
+// require_once("../model/Quiz.php");
+// require_once("../model/Question.php");
 require_once("../dao/DAO.php");
 
 class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
@@ -30,34 +32,35 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
     }
 
     public function removeByProperty($property_value, $property) {
+        var_dump($property_value);
+    
         $query = "DELETE FROM " . $this->table_name . 
-        " WHERE :property = :property_value";
-
+                 " WHERE $property = :property_value";
+    
         $stmt = $this->conn->prepare($query);
-
+    
         // bind parameters
-        $stmt->bindParam(':property', $property);
         $stmt->bindParam(':property_value', $property_value);
-
+    
         // execute the query
         if($stmt->execute()){
             return true;
         }    
-
+    
         return false;
     }
 
 
-    public function removeById($quiz_question) {
-        return $this->removeByProperty($quiz_question->getId(), 'id');
+    public function removeById($id) {
+        return $this->removeByProperty($id, 'id');
     }
 
-    public function removeByQuizId($quiz_question) {
-        return $this->removeByProperty($quiz_question->getQuizId(), 'quiz_id');
+    public function removeByQuizId($quiz_id) {
+        return $this->removeByProperty($quiz_id, 'quiz_id');
     }
 
-    public function removeByQuestionId($quiz_question) {
-        return $this->removeByProperty($quiz_question->getQuestionId(), 'question_id');
+    public function removeByQuestionId($question_id) {
+        return $this->removeByProperty($question_id, 'question_id');
     }
 
     
@@ -81,6 +84,38 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
         }    
     
         return false;
+    }
+
+    public function findAllByQuizId($quiz_id) {
+        
+        $quiz_question_list = [];
+
+        $query = "SELECT
+                    id, \"order\", score, quiz_id, question_id
+                FROM
+                    " . $this->table_name . "
+                WHERE
+                    quiz_id = ?";
+     
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(1, $quiz_id);
+        $stmt->execute();
+     
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $quiz = new Quiz($quiz_id, null, null, null, null);
+            $question = new Question($question_id, null, null, null);
+
+            $quiz_question = new QuizQuestion($id ,$order, $score);
+
+            $quiz_question->setQuiz($quiz);
+            $quiz_question->setQuestion($question);
+
+            $quiz_question_list[] =  $quiz_question;
+        }
+
+        return $quiz_question_list;
     }
 
     public function findById($id) {
