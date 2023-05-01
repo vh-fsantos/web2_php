@@ -1,6 +1,10 @@
 <?php
 
 include_once "../common/facade.php";
+include_once "../common/common.php";
+
+if (is_session_started() === FALSE) 
+	session_start();
 
 $id = @$_POST["id"];
 $name = @$_POST["name"];
