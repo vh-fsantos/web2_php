@@ -1,12 +1,21 @@
 <?php
 
-class User {
-
+class User 
+{
     private $id;
     private $name;
     private $login;
     private $password;
     private $email;
+
+    public function __construct($id, $login, $password, $name, $email)
+    {
+        $this->id = $id;
+        $this->login = $login;
+        $this->password = $password;
+        $this->name = $name;
+        $this->email = $email;
+    }
 
     public function getId() { return $this->id; }
     public function setId($id) { $this->id = $id; }

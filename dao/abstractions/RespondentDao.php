@@ -1,11 +1,11 @@
 <?php 
 
-interface DeveloperDao 
+interface RespondentDao 
 {
-    public function insert($developer);
-    public function remove($developer);
+    public function insert($respondent);
+    public function remove($respondent);
     public function removeById($id);
-    public function update($developer);
+    public function update($respondent);
     public function findById($id);
     public function findByLogin($login);
     public function findAll();
