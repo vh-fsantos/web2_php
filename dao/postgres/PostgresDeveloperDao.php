@@ -1,7 +1,6 @@
 <?php 
-
-include_once("dao/abstractions/DeveloperDao.php");
-include_once("dao/DAO.php");
+require_once("../dao/abstractions/DeveloperDao.php");
+require_once("../dao/DAO.php");
 
 class PostgresDeveloperDao extends DAO implements DeveloperDao
 {

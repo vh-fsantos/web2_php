@@ -6,8 +6,7 @@ CREATE TABLE developer (
     email varchar(255) not null,
     institution varchar(255) not null,
     is_admin boolean not null,
-    name varchar(255) not null,
-    quizzes varchar(255)[] not null
+    name varchar(255) not null
 );
 
 ALTER TABLE developer 
@@ -21,8 +20,7 @@ CREATE TABLE respondent (
     password varchar(255) not null,
     email varchar(255) not null,
     phone varchar(255) not null,
-    name varchar(255) not null,
-    offers varchar(255)[] not null
+    name varchar(255) not null
 );
 
 ALTER TABLE respondent 
@@ -132,7 +130,7 @@ REFERENCES alternative(id);
 CREATE TABLE offer (
     id serial not null,
     date timestamp,
-    quiz_id int not null
+    quiz_id int not null,
     respondent_id int not null
 );
 

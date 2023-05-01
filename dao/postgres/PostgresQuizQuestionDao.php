@@ -1,7 +1,7 @@
 <?php 
 
-include_once("../abstractions/QuizQuestionDao.php");
-include_once("../Dao.php");
+require_once("../dao/abstractions/QuizQuestionDao.php");
+require_once("../dao/DAO.php");
 
 class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
 

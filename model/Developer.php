@@ -1,6 +1,6 @@
 <?php
 
-include_once('model/User.php');
+require_once('User.php');
 
 class Developer extends User 
 {

@@ -1,8 +1,10 @@
 <?php
-
-include_once('dao/DaoFactory.php');
-include_once('dao/postgres/PostgresDeveloperDao.php');
-include_once('dao/postgres/PostgresRespondentDao.php');
+require_once('../dao/DaoFactory.php');
+require_once('PostgresDeveloperDao.php');
+require_once('PostgresRespondentDao.php');
+require_once('PostgresQuizDao.php');
+require_once('PostgresQuestionDao.php');
+require_once('PostgresQuizQuestionDao.php');
 
 class PostgresDaofactory extends DaoFactory 
 {
@@ -10,7 +12,7 @@ class PostgresDaofactory extends DaoFactory
     private $db_name = "PHP_questionnaires";
     private $port = "5432";
     private $username = "postgres";
-    private $password = "EU141200";
+    private $password = "postgres";
     public $conn;
   
     public function getConnection()
@@ -31,6 +33,12 @@ class PostgresDaofactory extends DaoFactory
     public function getDeveloperDao() { return new PostgresDeveloperDao($this->getConnection()); }
 
     public function getRespondentDao() { return new PostgresRespondentDao($this->getConnection()); }
+   
+    public function getQuizDao() { return new PostgresQuizDao($this->getConnection()); }
+   
+    public function getQuestionDao() { return new PostgresQuestionDao($this->getConnection()); }
+    
+    public function getQuizQuestionDao() { return new PostgresQuizQuestionDao($this->getConnection()); }
 }
 
 ?>

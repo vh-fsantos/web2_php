@@ -1,9 +1,9 @@
 <?php 
 
-include_once("../abstractions/QuizDao.php");
-include_once("../Dao.php");
+require_once("../dao/abstractions/QuizDao.php");
+require_once("../dao/DAO.php");
 
-class PostgresQuizDao extends Dao implements QuizDao {
+class PostgresQuizDao extends DAO implements QuizDao {
 
     private $table_name = 'quiz';
     
