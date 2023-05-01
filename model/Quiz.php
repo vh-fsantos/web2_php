@@ -4,14 +4,14 @@ class Quiz {
     private $id;
     private $description;
     private $dateCreate;
-    private $minimunScore;
+    private $minimumScore;
 
-    public function __construct( $id, $description, $dateCreate, $minimunScore)
+    public function __construct( $id, $description, $dateCreate, $minimumScore)
     {
         $this->id=$id;
         $this->description=$description;
         $this->dateCreate=$dateCreate;
-        $this->minimunScore=$minimunScore;
+        $this->minimumScore=$minimumScore;
     }
 
     public function getId() { return $this->id; }
@@ -23,7 +23,7 @@ class Quiz {
     public function getDateCreate() { return $this->dateCreate; }
     public function setDateCreate($dateCreate) {$this->dateCreate = $dateCreate;}
 
-    public function getMinimunScore() { return $this->minimunScore; }
-    public function setMinimunScore($minimunScore) {$this->minimunScore = $minimunScore;}
+    public function getMinimumScore() { return $this->minimumScore; }
+    public function setMinimumScore($minimumScore) {$this->minimumScore = $minimumScore;}
 }
 ?>

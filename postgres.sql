@@ -46,12 +46,12 @@ FOREIGN KEY(developer_id)
 REFERENCES developer(id);
 
 -- Tabela "question"
+CREATE TYPE question_type AS ENUM ('essay', 'multiple_choice', 'single_choice');
+
 CREATE TABLE question (
-    id serial not null,
+    id serial NOT NULL,
     description varchar(255),
-    is_essay boolean,
-    is_multiple_choice boolean,
-    is_single_choice boolean,
+    question_type question_type NOT NULL,
     image text
 );
 

@@ -3,18 +3,14 @@ class Question {
     
     private $id;
     private $description;
-    private $isEssay;
-    private $isMultipleChoice;
-    private $isSingleChoice;
+    private $questionType;
     private $image;
 
-    public function __construct($id, $description, $isEssay, $isMultipleChoice, $isSingleChoice, $image)
+    public function __construct($id, $description, $questionType, $image)
     {
         $this->id = $id;
         $this->description = $description;
-        $this->isEssay = $isEssay;
-        $this->isMultipleChoice = $isMultipleChoice;
-        $this->isSingleChoice = $isSingleChoice;
+        $this->questionType = $questionType;
         $this->image = $image;
     }
 
@@ -24,14 +20,8 @@ class Question {
     public function getDescription() { return $this->description; }
     public function setDescription($description) { $this->description = $description; }
 
-    public function getIsEssay() { return $this->isEssay; }
-    public function setIsEssay($isEssay) { $this->isEssay = $isEssay; }
-
-    public function getIsMultipleChoice() { return $this->isMultipleChoice; }
-    public function setIsMultipleChoice($isMultipleChoice) { $this->isMultipleChoice = $isMultipleChoice; }
-
-    public function getIsSingleChoice() { return $this->isSingleChoice; }
-    public function setIsSingleChoice($isSingleChoice) { $this->isSingleChoice = $isSingleChoice; }
+    public function getQuestionType() { return $this->questionType; }
+    public function setQuestionType($questionType) { $this->questionType = $questionType; }
 
     public function getImage() { return $this->image; }
     public function setImage($image) { $this->image = $image; }
