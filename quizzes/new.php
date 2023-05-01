@@ -1,14 +1,6 @@
 <?php
 require_once "../common/facade.php";
 
-$id = @$_GET["id"];
-
-$dao = $factory->getQuizDao();
-$quiz = $dao->findById($id);
-if($quiz==null) {
-    $quiz = new Quiz(null,null,null, null, null);
-}
-
 $page_title = "Questionarios";
 require_once "../common/header.php";
 
@@ -29,7 +21,38 @@ require_once "../common/header.php";
         <label for="minimum_score">Nota para aprovação:</label>
         <input name="minimum_score" type="number" class="form-control" id="minimum_score" placeholder="Digite a nota para aprovação">
       </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+
+      <!-- Tabela de questões -->
+    <div class="form-group">
+      <label for="question_list">Questões:</label>
+       
+      <table class="table table-striped" id="question-table">
+        <thead>
+          <tr>
+            <th>Selecionar</th>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+          $dao_question = $factory->getQuestionDao();
+          $questions = $dao_question->findAll();
+          foreach ($questions as $question) {
+              echo "<tr>";
+              echo "<td><input type='checkbox' name='question_ids[]' value='{$question->getId()}'></td>";
+              echo "<td>{$question->getId()}</td>";
+              echo "<td>{$question->getDescription()}</td>";
+              echo "<td>{$question->getQuestionType()}</td>";
+              echo "</tr>";
+          }
+          ?>
+        </tbody>
+      </table>
+    </div>
+    
+      <button type="submit" class="btn btn-primary">Criar</button>
     </form>
   </div>
 

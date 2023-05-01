@@ -9,8 +9,9 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
     
     public function create($quiz_question) {
 
+
         $query = "INSERT INTO " . $this->table_name . 
-            " (score, order, quiz_id, question_id) VALUES" .
+            " (score, \"order\", quiz_id, question_id) VALUES" .
             " (:score, :order, :quiz_id, :question_id)";
     
         $stmt = $this->conn->prepare($query);
@@ -64,7 +65,7 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
     public function update($quiz_question) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET order = :order, score = :score" .
+        " SET \"order\" = :order, score = :score" .
         " WHERE id = :id";
     
         $stmt = $this->conn->prepare($query);
@@ -87,7 +88,7 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
         $quiz_question = null;
 
         $query = "SELECT
-                    id, order, score, quiz_id, question_id
+                    id, \"order\", score, quiz_id, question_id
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -114,7 +115,7 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
         $quiz_question = array();
 
         $query = "SELECT
-                    id, order, score, quiz_id, question_id
+                    id, \"order\", score, quiz_id, question_id
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";

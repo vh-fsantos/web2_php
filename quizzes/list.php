@@ -40,11 +40,11 @@ if ($quizzes) {
 		echo "<td>{$quiz->getMinimumScore()}</td>";
 		echo "<td>";
 		// botão para alterar um questionário
-		echo "<a href='modifica_quiz.php?id={$quiz->getId()}' class='btn btn-info'>";
+		echo "<a href='/quizzes/edit.php?id={$quiz->getId()}' class='btn btn-info'>";
 		echo "<span class='fas fa-edit'></span> Alterar";
 		echo "</a>";
 		// botão para remover um questionário
-		echo "<a href='remove_quiz.php?id={$quiz->getId()}' class='btn btn-danger'";
+		echo "<a href='/quizzes/delete.php?id={$quiz->getId()}' class='btn btn-danger'";
 		echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
 		echo "<span class='fas fa-trash'></span> Excluir";
 		echo "</a>";
