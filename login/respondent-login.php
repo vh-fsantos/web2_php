@@ -15,19 +15,19 @@ if(!$login || !$password)
     exit; 
 }
 
-$dao = $factory->getDeveloperDao();
-$developer = $dao->findByLogin($login);
+$dao = $factory->getRespondentDao();
+$respondent = $dao->findByLogin($login);
 
 $errors = FALSE;
 
-if ($developer)
+if ($respondent)
 {
-    if(!strcmp($password, $developer->getPassword())) 
+    if(!strcmp($password, $respondent->getPassword())) 
     { 
-        $_SESSION["userId"]= $developer->getId(); 
-        $_SESSION["username"] = stripslashes($developer->getName()); 
-        $_SESSION["userType"]= "developer";
-        $_SESSION["isAdmin"]= TRUE;
+        $_SESSION["userId"]= $respondent->getId(); 
+        $_SESSION["username"] = stripslashes($respondent->getName()); 
+        $_SESSION["userType"]= "respondent";
+        $_SESSION["isAdmin"]= FALSE;
     } 
     else
         $errors = TRUE;

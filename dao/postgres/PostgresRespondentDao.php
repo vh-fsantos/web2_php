@@ -10,8 +10,8 @@ class PostgresRespondentDao extends DAO implements RespondentDao
     public function create($respondent) 
     {
         $query = "INSERT INTO " . $this->table_name . 
-        " (login, password, email, phone, name, offers) VALUES" .
-        " (:login, :password, :email, :phone, :name, :offers)";
+        " (login, password, email, phone, name) VALUES" .
+        " (:login, :password, :email, :phone, :name)";
 
         $stmt = $this->conn->prepare($query);
         $login = $respondent->getLogin();

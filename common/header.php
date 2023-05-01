@@ -11,20 +11,36 @@
 
 <body>
 	<header>
-		<div class="pull-right" id="login_info">
-		<?php	
-		include_once "common.php";
-		
-		if (is_session_started() === FALSE ) 
-			session_start();
-		
-		if(isset($_SESSION["username"])) {
-			echo "<span>Você está logado como " . $_SESSION["username"];		
-			echo "<a href='executa_logout.php'> Logout </a></span>";
-		} else {
-			echo "<span>Desconectado</span>";
-		}
-		?>	
-		</div>
-	</header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/">Meu Site</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<?php
+						include_once "common.php";
 
+						if (is_session_started() === FALSE ) 
+						session_start();
+
+						if(isset($_SESSION['username'])) {
+							echo '<li class="nav-item active">';
+							echo '<a class="nav-link">Bem-vindo, ' . $_SESSION['username'] . '</a>';
+							echo '</li>';
+							echo '<li class="nav-item">';
+							echo '<a class="nav-link" href="/login/logout.php">Logout</a>';
+							echo '</li>';
+						} else {
+							echo '<li class="nav-item">';
+							echo '<a class="nav-link" href="/login/">Login</a>';
+							echo '</li>';
+							echo '<li class="nav-item">';
+							echo '<a class="nav-link" href="/respondents/">Cadastro</a>';
+							echo '</li>';
+						}
+					?>
+				</ul>
+			</div>
+		</nav>
+	</header>

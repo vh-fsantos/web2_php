@@ -2,6 +2,8 @@
 
 include_once("common/header.php");
 
-echo "Hello World";
+
+
+include_once("common/footer.php");
 
 ?>
