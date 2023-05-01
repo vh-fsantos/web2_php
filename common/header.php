@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?></title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
@@ -22,7 +22,7 @@
 					<?php
 						include_once "common.php";
 
-						if (is_session_started() === FALSE ) 
+						if (is_session_started() === FALSE) 
 						session_start();
 
 						if(isset($_SESSION['username'])) {
@@ -45,3 +45,7 @@
 			</div>
 		</nav>
 	</header>
+	<div class="container-fluid">
+    	<div class="row">
+        	<?php include_once("sidebar.php") ?>
+        	<div class="col-md-9">

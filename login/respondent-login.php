@@ -4,14 +4,14 @@ include_once("../common/facade.php");
 
 session_start();
 
-$login = isset($_POST["login"]) ? addslashes(trim($_POST["login"])) : FALSE;
-$password = isset($_POST["password"]) ? md5(trim($_POST["password"])) : FALSE;
+$login = isset($_POST["respondentLogin"]) ? addslashes(trim($_POST["respondentLogin"])) : FALSE;
+$password = isset($_POST["respondentPassword"]) ? md5(trim($_POST["respondentPassword"])) : FALSE;
 
 if(!$login || !$password) 
 {
     echo "login = " . $login . " / senha = " . $password . "<br>";
     echo "Você deve digitar sua senha e login!<br>"; 
-    echo "<a href='login/'>Efetuar Login</a>";
+    echo "<a href='/login'>Efetuar Login</a>";
     exit; 
 }
 
@@ -28,12 +28,17 @@ if ($respondent)
         $_SESSION["username"] = stripslashes($respondent->getName()); 
         $_SESSION["userType"]= "respondent";
         $_SESSION["isAdmin"]= FALSE;
+        header("location: /index.php");
+        exit;
     } 
     else
         $errors = TRUE;
 }
 
-if ($errors == TRUE) 
-    echo "DEU MERDA";
+if ($errors == TRUE)
+{
+    header("location: /index.php");
+    exit;
+}
 
 ?>
