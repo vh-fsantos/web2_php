@@ -4,16 +4,12 @@ class QuizQuestion {
     private $id;
     private $score;
     private $order;
-    private $quiz;
-    private $question;
 
-    public function __construct( $id, $score, $order, $quiz, $question)
+    public function __construct($id, $score, $order)
     {
         $this->id=$id;
         $this->score=$score;
         $this->order=$order;
-        $this->quiz=$quiz;
-        $this->question= $question;
     }
 
     public function getId() { return $this->id; }

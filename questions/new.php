@@ -26,7 +26,7 @@ require_once "../common/header.php";
   </style>
 
   <div class="container">
-  <h2>Registro de Questões</h2>
+  <h1 class="mt-4 mb-4">Registro de Questões</h1>
 		<form method="POST" action="/questions/create_update.php" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="description">Descrição:</label>
@@ -53,7 +53,7 @@ require_once "../common/header.php";
 				<label for="image">Imagem:</label>
 				<input type="file" class="form-control-file" id="image" name="image">
 			</div>
-			<button type="submit" class="btn btn-primary">Registrar Questão</button>
+			<button type="submit" class="btn btn-primary">Criar</button>
 		</form>
   </div>
 
