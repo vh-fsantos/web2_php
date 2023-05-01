@@ -19,7 +19,6 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $email = $respondent->getEmail();
         $phone = $respondent->getPhone();
         $name = $respondent->getName();
-        $offers = '{' . implode(',', $respondent->getOffers()) . '}';
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":login", $login);
@@ -27,7 +26,6 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":phone", $phone);
         $stmt->bindParam(":name", $name);
-        $stmt->bindParam(':offers', $offers);
 
         if($stmt->execute())
             return true;
@@ -57,7 +55,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
     public function update($respondent) 
     {
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, password = :password, email = :email, phone = :phone, name = :name, offers = :offers" .
+        " SET login = :login, password = :password, email = :email, phone = :phone, name = :name" .
         " WHERE id = :id";
 
         $login = $respondent->getLogin();
@@ -66,7 +64,6 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $phone = $respondent->getPhone();
         $name = $respondent->getName();
         $id = $respondent->getId();
-        $offers = '{' . implode(',', $respondent->getOffers()) . '}';
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":login", $login);
@@ -74,7 +71,6 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":phone", $phone);
         $stmt->bindParam(":name", $name);
-        $stmt->bindParam(':offers', $offers);
         $stmt->bindParam(':id', $id);
 
         if($stmt->execute())
@@ -87,7 +83,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
     {
         $respondent = null;
 
-        $query = "SELECT id, login, password, email, phone, name, offers
+        $query = "SELECT id, login, password, email, phone, name
               FROM " . $this->table_name . " 
               WHERE id = :id 
               LIMIT 1 OFFSET 0";
@@ -101,9 +97,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         if($row)
         {
             extract($row);
-            preg_match_all('/\d+/', $offers, $matches);
-            $offersArray = array_map('strval', $matches[0]);
-            $respondent = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
+            $respondent = new Respondent($id, $login, $password, $name, $email, $phone);
         }
 
         return $respondent;
@@ -114,7 +108,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $respondent = null;
 
         $query = "SELECT
-                    id, login, password, email, phone, name, offers
+                    id, login, password, email, phone, name
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -130,9 +124,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         if($row) 
         {
             extract($row);
-            preg_match_all('/\d+/', $offers, $matches);
-            $offersArray = array_map('strval', $matches[0]);
-            $respondent = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
+            $respondent = new Respondent($id, $login, $password, $name, $email, $phone);
         } 
      
         return $respondent;
@@ -142,17 +134,15 @@ class PostgresRespondentDao extends DAO implements RespondentDao
     {
         $respondents = array();
 
-        $query = "SELECT id, login, password, email, phone, name, offers
+        $query = "SELECT id, login, password, email, phone, name
                 FROM " . $this->table_name . " ORDER BY id ASC";
      
-        $stmt = $this->conn->prepare( $query );
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            preg_match_all('/\d+/', $offers, $matches);
-            $offersArray = array_map('strval', $matches[0]);
-            $respondents[] = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
+            $respondents[] = new Respondent($id, $login, $password, $name, $email, $phone);
         }
         
         return $respondents;

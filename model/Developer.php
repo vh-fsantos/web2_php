@@ -6,13 +6,11 @@ class Developer extends User
 {
     private $institution;
     private $isAdmin;
-    private $quizzes;
 
-    public function __construct($id, $login, $password, $name, $email, $institution, $isAdmin, $quizzes){
+    public function __construct($id, $login, $password, $name, $email, $institution, $isAdmin){
         parent::__construct($id, $login, $password, $name, $email);
         $this->institution = $institution;
         $this->isAdmin = $isAdmin;
-        $this->quizzes = $quizzes;
     }
 
     public function getInstitution() { return $this->institution; }
@@ -21,8 +19,6 @@ class Developer extends User
     public function getIsAdmin() { return $this->isAdmin; }
     public function setIsAdmin($isAdmin) { $this->isAdmin = $isAdmin; }
 
-    public function getQuizzes() { return $this->quizzes; }
-    public function setQuizzes($quizzes) { $this->quizzes = $quizzes; }
 }
 
 ?>
