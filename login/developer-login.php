@@ -37,7 +37,7 @@ if ($developer)
 
 if ($errors == TRUE)
 {
-    header("location: /index.php");
+    header("location: /login");
     exit;
 }
 

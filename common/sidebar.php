@@ -30,11 +30,11 @@ if (isset($_SESSION["userType"]))
                 <?php
                 if ($developer){
                     echo '<li class="nav-item">';
+                    echo '<a class="nav-link" href="/respondents">Respondentes</a>';
+                    echo '</li>';
+                    echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/quizzes/list.php">Questionários</a>';
                     echo '</li>';
-                }?>
-                <?php
-                if ($developer){
                     echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/questions/list.php">Questões</a>';
                     echo '</li>';
