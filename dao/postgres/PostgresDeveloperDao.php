@@ -9,8 +9,8 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
     public function create($developer) 
     {
         $query = "INSERT INTO " . $this->table_name . 
-        " (login, password, email, institution, is_admin, name, quizzes) VALUES" .
-        " (:login, :password, :email, :institution, :is_admin, :name, :quizzes)";
+        " (login, password, email, institution, is_admin, name) VALUES" .
+        " (:login, :password, :email, :institution, :is_admin, :name)";
 
         $stmt = $this->conn->prepare($query);
         $login = $developer->getLogin();
@@ -19,7 +19,6 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         $institution = $developer->getInstitution();
         $isAdmin = $developer->getIsAdmin() ? "true" : "false";
         $name = $developer->getName();    
-        $quizzes = '{' . implode(',', $developer->getQuizzes()) . '}';
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":login", $login);
@@ -28,7 +27,6 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         $stmt->bindParam(":institution", $institution);
         $stmt->bindParam(":is_admin", $isAdmin);
         $stmt->bindParam(":name", $name);
-        $stmt->bindParam(':quizzes', $quizzes);
 
         if($stmt->execute())
             return true;
@@ -57,7 +55,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
     public function update($developer) 
     {
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, password = :password, email = :email, institution = :institution, is_admin = :is_admin, name = :name, quizzes = :quizzes" .
+        " SET login = :login, password = :password, email = :email, institution = :institution, is_admin = :is_admin, name = :name" .
         " WHERE id = :id";
 
         $login = $developer->getLogin();
@@ -67,7 +65,6 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         $isAdmin = $developer->getIsAdmin() ? "true" : "false";
         $name = $developer->getName();
         $id = $developer->getId();
-        $quizzes = '{' . implode(',', $developer->getQuizzes()) . '}';
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":login", $login);
@@ -76,7 +73,6 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         $stmt->bindParam(":institution", $institution);
         $stmt->bindParam(":is_admin", $isAdmin);
         $stmt->bindParam(":name", $name);
-        $stmt->bindParam(':quizzes', $quizzes);
         $stmt->bindParam(':id', $id);
 
         if($stmt->execute())
@@ -89,7 +85,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
     {
         $developer = null;
 
-        $query = "SELECT id, login, password, email, institution, is_admin, name, quizzes
+        $query = "SELECT id, login, password, email, institution, is_admin, name
               FROM " . $this->table_name . " 
               WHERE id = :id 
               LIMIT 1 OFFSET 0";
@@ -103,9 +99,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         if($row)
         {
             extract($row);
-            preg_match_all('/\d+/', $quizzes, $matches);
-            $quizzesArray = array_map('strval', $matches[0]);
-            $developer = new Developer($id, $login, $password, $name, $email, $institution, $is_admin, $quizzesArray);
+            $developer = new Developer($id, $login, $password, $name, $email, $institution, $is_admin);
         }
             
         return $developer;
@@ -115,7 +109,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
     {
         $developer = null;
 
-        $query = "SELECT id, login, password, email, institution, is_admin, name, quizzes
+        $query = "SELECT id, login, password, email, institution, is_admin, name
         FROM " . $this->table_name . " 
                 WHERE
                     login = ?
@@ -129,9 +123,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
             extract($row);
-            preg_match_all('/\d+/', $quizzes, $matches);
-            $quizzesArray = array_map('strval', $matches[0]);
-            $developer = new Developer($id, $login, $password, $name, $email, $institution, $is_admin, $quizzesArray);
+            $developer = new Developer($id, $login, $password, $name, $email, $institution, $is_admin);
         } 
      
         return $developer;
@@ -141,7 +133,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
     {
         $developers = array();
 
-        $query = "SELECT id, login, password, email, institution, is_admin, name, quizzes 
+        $query = "SELECT id, login, password, email, institution, is_admin, name 
                   FROM " . $this->table_name . " ORDER BY id ASC";
      
         $stmt = $this->conn->prepare( $query );
@@ -149,9 +141,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            preg_match_all('/\d+/', $quizzes, $matches);
-            $quizzesArray = array_map('strval', $matches[0]);
-            $developers[] = new Developer($id, $login, $password, $name, $email, $institution, $is_admin, $quizzesArray);
+            $developers[] = new Developer($id, $login, $password, $name, $email, $institution, $is_admin);
         }
         
         return $developers;
