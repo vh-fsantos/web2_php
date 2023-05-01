@@ -7,7 +7,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
     private $table_name = 'question';
 
-    public function insert($question) {
+    public function create($question) {
 
         $query = "INSERT INTO " . $this->table_name .
             " (description, is_essay, is_multiple_choice, is_single_choice, image) VALUES" .

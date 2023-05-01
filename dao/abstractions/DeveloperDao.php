@@ -2,7 +2,7 @@
 
 interface DeveloperDao 
 {
-    public function insert($developer);
+    public function create($developer);
     public function remove($developer);
     public function removeById($id);
     public function update($developer);

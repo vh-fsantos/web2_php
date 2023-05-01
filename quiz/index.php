@@ -16,18 +16,18 @@ $titulo_pagina = "Questionarios";
 
   <div class="container">
     <h1 class="mt-4 mb-4">Registro de Questionários</h1>
-    <form>
+    <form action="quiz/create_update.php" method=post>
       <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" class="form-control" id="nome" placeholder="Digite o nome do questionário">
+        <label for="name">Nome:</label>
+        <input name="name" type="text" class="form-control" id="name" placeholder="Digite o name do questionário">
       </div>
       <div class="form-group">
-        <label for="descricao">Descrição:</label>
-        <textarea class="form-control" id="descricao" rows="3" placeholder="Digite a descrição do questionário"></textarea>
+        <label for="description">Descrição:</label>
+        <textarea name="description" class="form-control" id="description" rows="3" placeholder="Digite a descrição do questionário"></textarea>
       </div>
       <div class="form-group">
-        <label for="nota">Nota para aprovação:</label>
-        <input type="number" class="form-control" id="nota" placeholder="Digite a nota para aprovação">
+        <label for="minimun_score">Nota para aprovação:</label>
+        <input name="minimun_score" type="number" class="form-control" id="minimun_score" placeholder="Digite a nota para aprovação">
       </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>

@@ -2,7 +2,7 @@
 
 interface RespondentDao 
 {
-    public function insert($respondent);
+    public function create($respondent);
     public function remove($respondent);
     public function removeById($id);
     public function update($respondent);

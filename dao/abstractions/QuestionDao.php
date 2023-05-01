@@ -1,7 +1,7 @@
 <?php 
 
 interface QuestionDao {
-    public function insert($quiz);
+    public function create($quiz);
     public function remove($quiz);
     public function removeById($id);
     public function update($quiz);

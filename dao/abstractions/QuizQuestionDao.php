@@ -1,7 +1,7 @@
 <?php 
 
 interface QuizQuestionDao {
-    public function insert($quiz_question);
+    public function create($quiz_question);
     public function removeByProperty($property_value, $property);
     public function removeByQuestionId($quiz_question);
     public function removeByQuizId($quiz_question);

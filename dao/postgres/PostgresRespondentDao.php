@@ -7,7 +7,7 @@ class PostgresRespondentDao extends DAO implements RespondentDao
 {
     private $table_name = 'respondent';
     
-    public function insert($respondent) 
+    public function create($respondent) 
     {
         $query = "INSERT INTO " . $this->table_name . 
         " (login, password, email, phone, name, offers) VALUES" .

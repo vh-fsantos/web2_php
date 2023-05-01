@@ -7,7 +7,7 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
 
     private $table_name = 'quiz_question';
     
-    public function insert($quiz_question) {
+    public function create($quiz_question) {
 
         $query = "INSERT INTO " . $this->table_name . 
             " (score, order, quiz_id, question_id) VALUES" .

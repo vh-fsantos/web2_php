@@ -6,7 +6,7 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
 {
     private $table_name = 'developer';
     
-    public function insert($developer) 
+    public function create($developer) 
     {
         $query = "INSERT INTO " . $this->table_name . 
         " (login, password, email, institution, is_admin, name, quizzes) VALUES" .
