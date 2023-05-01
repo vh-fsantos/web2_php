@@ -15,6 +15,11 @@ $dao = $factory->getQuestionDao();
 $questions = $dao->findAll();
 
 // exibe as questões, se houver alguma
+
+echo "<a href='/questions/new.php' class='btn btn-primary mb-3'>";
+echo "<span class='fas fa-plus'></span> Novo";
+echo "</a>";
+
 if ($questions) {
  
 	echo "<table class='table table-hover table-bordered'>";
@@ -51,9 +56,7 @@ if ($questions) {
 	echo "</table>";
 }
  
-echo "<a href='/questions/new.php' class='btn btn-primary mt-3'>";
-echo "<span class='fas fa-plus'></span> Novo";
-echo "</a>";
+
 
 echo "</section>";
 

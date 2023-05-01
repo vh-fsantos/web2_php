@@ -14,6 +14,10 @@ echo "<section class='container mt-4'>";
 $dao = $factory->getQuizDao();
 $quizzes = $dao->findAll();
 
+echo "<a href='/quizzes/new.php' class='btn btn-primary mb-3'>";
+echo "<span class='fas fa-plus'></span> Novo";
+echo "</a>";
+
 // exibe os questionários, se houver algum
 if ($quizzes) {
  
@@ -51,9 +55,7 @@ if ($quizzes) {
 	echo "</table>";
 }
  
-echo "<a href='/quizzes/new.php' class='btn btn-primary mt-3'>";
-echo "<span class='fas fa-plus'></span> Novo";
-echo "</a>";
+
 
 echo "</section>";
 
