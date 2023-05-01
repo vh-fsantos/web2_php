@@ -37,7 +37,10 @@ if ($respondents)
 	echo "<th>Nome</th>";
 	echo "<th>Email</th>";
   echo "<th>Telefone</th>";
-  echo "<th>Ações</th>";
+  if ($isAdmin)
+  {
+    echo "<th>Ações</th>";
+  }
 	echo "</tr>";
 	echo "</thead>";
 	echo "<tbody>";
