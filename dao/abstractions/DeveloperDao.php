@@ -1,7 +1,7 @@
 <?php 
 
-interface DeveloperDao {
-
+interface DeveloperDao 
+{
     public function insert($developer);
     public function remove($developer);
     public function removeById($id);
@@ -9,7 +9,6 @@ interface DeveloperDao {
     public function findById($id);
     public function findByLogin($login);
     public function findAll();
-
 }
 
 ?>

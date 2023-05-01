@@ -1,7 +1,7 @@
 <?php 
 
-interface RespondentDao {
-
+interface RespondentDao 
+{
     public function insert($respondent);
     public function remove($respondent);
     public function removeById($id);
@@ -9,7 +9,6 @@ interface RespondentDao {
     public function findById($id);
     public function findByLogin($login);
     public function findAll();
-
 }
 
 ?>

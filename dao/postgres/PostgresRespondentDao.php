@@ -1,27 +1,33 @@
 <?php 
 
-include_once("../abstractions/RespondentDao.php");
-include_once("../DAO.php");
+include_once("dao/abstractions/RespondentDao.php");
+include_once("dao/DAO.php");
 
 class PostgresRespondentDao extends DAO implements RespondentDao
 {
-
     private $table_name = 'respondent';
     
-    public function insert($respondent) {
-
+    public function insert($respondent) 
+    {
         $query = "INSERT INTO " . $this->table_name . 
-        " (login, password, email, institution, is_admin, name) VALUES" .
-        " (:login, :password, :email, :institution, :is_admin, :name)";
+        " (login, password, email, phone, name, offers) VALUES" .
+        " (:login, :password, :email, :phone, :name, :offers)";
 
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(":login", $respondent->getLogin());
-        $stmt->bindParam(":password", md5($respondent->getPassword()));
-        $stmt->bindParam(":email", $respondent->getEmail());
-        $stmt->bindParam(":institution", $respondent->getInstitution());
-        $stmt->bindParam(":is_admin", $respondent->isAdmin());
-        $stmt->bindParam(":name", $respondent->getName());
+        $login = $respondent->getLogin();
+        $password = md5($respondent->getPassword());
+        $email = $respondent->getEmail();
+        $phone = $respondent->getPhone();
+        $name = $respondent->getName();
+        $offers = '{' . implode(',', $respondent->getOffers()) . '}';
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":login", $login);
+        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":phone", $phone);
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(':offers', $offers);
 
         if($stmt->execute())
             return true;
@@ -29,7 +35,8 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         return false;
     }
 
-    public function removeById($id) {
+    public function removeById($id) 
+    {
         $query = "DELETE FROM " . $this->table_name . 
         " WHERE id = :id";
 
@@ -42,24 +49,33 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         return false;
     }
 
-    public function remove($developer) {
-        return $this->removeById($developer->getId());
+    public function remove($respondent) 
+    {
+        return $this->removeById($respondent->getId());
     }
 
-    public function update($developer) {
-
+    public function update($respondent) 
+    {
         $query = "UPDATE " . $this->table_name . 
-        " SET login = :login, password = :password, email = :email, institution = :institution, is_admin = :is_admin, name = :name" .
+        " SET login = :login, password = :password, email = :email, phone = :phone, name = :name, offers = :offers" .
         " WHERE id = :id";
 
+        $login = $respondent->getLogin();
+        $password = md5($respondent->getPassword());
+        $email = $respondent->getEmail();
+        $phone = $respondent->getPhone();
+        $name = $respondent->getName();
+        $id = $respondent->getId();
+        $offers = '{' . implode(',', $respondent->getOffers()) . '}';
+        
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":login", $developer->getLogin());
-        $stmt->bindParam(":password", md5($developer->getPassword()));
-        $stmt->bindParam(":email", $developer->getEmail());
-        $stmt->bindParam(":institution", $developer->getInstitution());
-        $stmt->bindParam(":is_admin", $developer->isAdmin());
-        $stmt->bindParam(":name", $developer->getName());
-        $stmt->bindParam(':id', $developer->getId());
+        $stmt->bindParam(":login", $login);
+        $stmt->bindParam(":password", $password);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":phone", $phone);
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(':offers', $offers);
+        $stmt->bindParam(':id', $id);
 
         if($stmt->execute())
             return true;
@@ -67,10 +83,11 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         return false;
     }
 
-    public function findById($id) {
-        $developer = null;
+    public function findById($id) 
+    {
+        $respondent = null;
 
-        $query = "SELECT id, login, password, email, institution, is_admin, name 
+        $query = "SELECT id, login, password, email, phone, name, offers
               FROM " . $this->table_name . " 
               WHERE id = :id 
               LIMIT 1 OFFSET 0";
@@ -82,17 +99,22 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if($row)
-            $developer = new Developer($row['id'], $row['login'], $row['password'], $row['name'], $row['email'], $row['institution'], $row['is_admin']);
-     
-        return $developer;
+        {
+            extract($row);
+            preg_match_all('/\d+/', $offers, $matches);
+            $offersArray = array_map('strval', $matches[0]);
+            $respondent = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
+        }
+
+        return $respondent;
     }
 
-    public function findByLogin($login) {
-
-        $developer = null;
+    public function findByLogin($login) 
+    {
+        $respondent = null;
 
         $query = "SELECT
-                    id, login, nome, senha
+                    id, login, password, email, phone, name, offers
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -100,33 +122,40 @@ class PostgresRespondentDao extends DAO implements RespondentDao
                 LIMIT
                     1 OFFSET 0";
      
-        $stmt = $this->conn->prepare( $query );
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $login);
         $stmt->execute();
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row) {
-            $developer = new Developer($row['id'], $row['login'], $row['password'], $row['name'], $row['email'], $row['institution'], $row['is_admin']);
+        if($row) 
+        {
+            extract($row);
+            preg_match_all('/\d+/', $offers, $matches);
+            $offersArray = array_map('strval', $matches[0]);
+            $respondent = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
         } 
      
-        return $developer;
+        return $respondent;
     }
 
     public function findAll()
     {
-        $developers = array();
+        $respondents = array();
 
-        $query = "SELECT id, login, password, email, institution, is_admin, name FROM " . $this->table_name . " ORDER BY id ASC";
+        $query = "SELECT id, login, password, email, phone, name, offers
+                FROM " . $this->table_name . " ORDER BY id ASC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $developers[] = new Developer($id, $login, $password, $name, $email, $institution, $isadmin);
+            preg_match_all('/\d+/', $offers, $matches);
+            $offersArray = array_map('strval', $matches[0]);
+            $respondents[] = new Respondent($id, $login, $password, $name, $email, $phone, $offersArray);
         }
         
-        return $developers;
+        return $respondents;
     }
 }
 
