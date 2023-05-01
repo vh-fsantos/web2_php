@@ -27,11 +27,14 @@ if (isset($_SESSION["userType"]))
                     echo '</li>';
                 }
                 ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/quizzes/list.php">Questionarios</a>
-                </li>
                 <?php
-                if ($admin || $developer){
+                if ($developer){
+                    echo '<li class="nav-item">';
+                    echo '<a class="nav-link" href="/quizzes/list.php">Questionários</a>';
+                    echo '</li>';
+                }?>
+                <?php
+                if ($developer){
                     echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/questions/list.php">Questões</a>';
                     echo '</li>';
