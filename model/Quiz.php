@@ -2,20 +2,25 @@
 class Quiz {
     
     private $id;
+    private $name;
     private $description;
-    private $dateCreate;
     private $minimumScore;
+    private $dateCreate;
 
-    public function __construct( $id, $description, $dateCreate, $minimumScore)
+    public function __construct($id, $name, $description, $minimumScore, $dateCreate)
     {
         $this->id=$id;
+        $this->name=$name;
         $this->description=$description;
-        $this->dateCreate=$dateCreate;
         $this->minimumScore=$minimumScore;
+        $this->dateCreate=$dateCreate;
     }
 
     public function getId() { return $this->id; }
     public function setId($id) {$this->id = $id;}
+
+    public function getName() { return $this->name; }
+    public function setName($name) {$this->name = $name;}
 
     public function getDescription() { return $this->description; }
     public function setDescription($description) {$this->description = $description;}

@@ -15,8 +15,8 @@ $dao = $factory->getQuizDao();
 $quiz = $dao->findById($id);
 
 if($quiz===null) {
-    $quiz = new Quiz($id, $name, $description, $minimum_score);
-    var_dump($_SESSION["userId"]);
+    $quiz = new Quiz($id, $name, $description, $minimum_score, null);
+    var_dump($quiz);
     $developer = new Developer($_SESSION["userId"],null, null, null, null, null, null);
     $quiz->setDeveloper($developer);
     $idInserido = $dao->create($quiz);
@@ -29,6 +29,6 @@ if($quiz===null) {
 }
 
 
-header("Location: index.php");
+header("Location: list.php");
 
 ?>

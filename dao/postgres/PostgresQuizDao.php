@@ -10,12 +10,13 @@ class PostgresQuizDao extends DAO implements QuizDao {
     public function create($quiz) {
 
         $query = "INSERT INTO " . $this->table_name . 
-            " (description, date_create, minimum_score, developer_id) VALUES" .
-            " (:description, NOW(), :minimum_score, :developer_id)";
+            " (name, description, date_create, minimum_score, developer_id) VALUES" .
+            " (:name, :description, NOW(), :minimum_score, :developer_id)";
     
         $stmt = $this->conn->prepare($query);
     
         // bind values 
+        $stmt->bindParam(":name", $quiz->getName());
         $stmt->bindParam(":description", $quiz->getDescription());
         $stmt->bindParam(":minimum_score", $quiz->getMinimumScore());
         $stmt->bindParam(":developer_id", $quiz->getDeveloper()->getId());
@@ -51,12 +52,13 @@ class PostgresQuizDao extends DAO implements QuizDao {
     public function update($quiz) {
 
         $query = "UPDATE " . $this->table_name . 
-        " SET description = :description, minimum_score = :minimum_score" .
+        " SET name = :name, description = :description, minimum_score = :minimum_score" .
         " WHERE id = :id";
     
         $stmt = $this->conn->prepare($query);
     
         // bind parameters
+        $stmt->bindParam(":name", $quiz->getName());
         $stmt->bindParam(":description", $quiz->getDescription());
         $stmt->bindParam(":minimum_score", $quiz->getMinimumScore());
         $stmt->bindParam(':id', $quiz->getId());
@@ -74,7 +76,7 @@ class PostgresQuizDao extends DAO implements QuizDao {
         $quiz = null;
 
         $query = "SELECT
-                    id, description, minimum_score, date_create
+                    id, name, description, minimum_score, date_create
                 FROM
                     " . $this->table_name . "
                 WHERE
@@ -88,7 +90,7 @@ class PostgresQuizDao extends DAO implements QuizDao {
      
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row) {
-            $quiz = new Quiz($row['id'],$row['description'], $row['minimum_score'], $row['date_create']);
+            $quiz = new Quiz($row['id'], $row['name'],$row['description'], $row['minimum_score'], $row['date_create']);
         } 
      
         return $quiz;
@@ -99,7 +101,7 @@ class PostgresQuizDao extends DAO implements QuizDao {
         $quizes = array();
 
         $query = "SELECT
-                    id, description, minimum_score, date_create
+                    id, name, description, minimum_score, date_create
                 FROM
                     " . $this->table_name . 
                     " ORDER BY id ASC";
@@ -109,7 +111,7 @@ class PostgresQuizDao extends DAO implements QuizDao {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $quizes[] = new Quiz($id,$description,$minimum_score,$date_create);
+            $quizes[] = new Quiz($id, $name, $description,$minimum_score,$date_create);
         }
         
         return $quizes;

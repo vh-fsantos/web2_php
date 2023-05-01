@@ -30,6 +30,7 @@ PRIMARY KEY(id);
 -- Tabela "quiz"
 CREATE TABLE quiz (
     id serial not null,
+    name varchar(255) not null,
     description varchar(255) not null,
     date_create timestamp,
     minimum_score int not null,
