@@ -1,5 +1,5 @@
 <?php 
-$page_title = "Elaboradores";
+$page_title = "Respondentes";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");
@@ -8,7 +8,7 @@ include_once("../common/header.php");
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <h2 class="mb-4">Registro de Elaboradores</h2>
+          <h2 class="mb-4">Registro de Respondentes</h2>
           <form action="create.php" method="get">
             <div class="form-group">
               <label for="login">Login</label>
@@ -27,8 +27,8 @@ include_once("../common/header.php");
               <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="form-group">
-              <label for="institution">Instituição</label>
-              <input type="text" class="form-control" id="institution" name="institution" required>
+              <label for="phone">Telefone</label>
+              <input type="text" class="form-control" id="phone" name="phone" required>
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
           </form>
