@@ -12,6 +12,8 @@ abstract class DaoFactory {
     public abstract function getQuestionDao();
 
     public abstract function getQuizQuestionDao();
+
+    public abstract function getAlternativeDao();
 }
 
 ?>

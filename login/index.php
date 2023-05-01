@@ -13,7 +13,7 @@ include_once("../common/header.php");
                     <h2 class="text-center">Developer Login</h2>
                 </div>
                 <div class="card-body">
-                    <form action="developer-login.php" method="post">
+                    <form action="/login/developer-login.php" method="post">
                         <div class="form-group">
                             <label for="developerLogin">Login:</label>
                             <input type="text" name="developerLogin" id="developerLogin" class="form-control" required>
@@ -33,7 +33,7 @@ include_once("../common/header.php");
                     <h2 class="text-center">Respondent Login</h2>
                 </div>
                 <div class="card-body">
-                    <form action="respondent-login.php" method="post">
+                    <form action="/login/respondent-login.php" method="post">
                         <div class="form-group">
                             <label for="respondentLogin">Login:</label>
                             <input type="text" name="respondentLogin" id="respondentLogin" class="form-control" required>

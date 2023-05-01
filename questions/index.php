@@ -27,7 +27,7 @@ require_once "../common/header.php";
 
   <div class="container">
   <h2>Registro de Questões</h2>
-		<form method="POST" action="question/create_update.php" enctype="multipart/form-data">
+		<form method="POST" action="/questions/create_update.php" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="description">Descrição:</label>
 				<textarea class="form-control" id="description" name="description" required></textarea>
@@ -78,12 +78,12 @@ require_once "../common/header.php";
       $(document).on('click', '.add_button', function() {
 			var html = '';
 			html += '<li class="list-group-item alternative">';
-      if ($('#tipo_resposta').val() === 'escolha_unica') {
-				html += '<input type="radio" class="radio" name="is_correct" value="' + $('.alternative').length + '" required>';
+      if ($('#question_type').val() === 'single_choice') {
+				html += '<input type="radio" class="radio" name="is_correct[]" value="' + $('.alternative').length + '">';
 			} else {
-				html += '<input type="checkbox" class="checkbox" name="is_correct[]" value="' + $('.alternative').length + '" required>';
+				html += '<input type="checkbox" class="checkbox" name="is_correct[]" value="' + $('.alternative').length + '">';
 			}
-			html += '<input type="text" class="form-control" name="alternative[]" placeholder="Digite uma alternative" required>';
+			html += '<input type="text" class="form-control" name="alternatives[]" placeholder="Digite uma alternative">';
 			
 			html += '<button type="button" class="remove_button btn btn-danger">Remover</button></li>';
 			$('#alternatives .list-group').append(html);

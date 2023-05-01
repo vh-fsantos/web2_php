@@ -25,5 +25,8 @@ class Quiz {
 
     public function getMinimumScore() { return $this->minimumScore; }
     public function setMinimumScore($minimumScore) {$this->minimumScore = $minimumScore;}
+
+    public function getDeveloper() { return $this->developer; }
+    public function setDeveloper($developer) {$this->developer = $developer;}
 }
 ?>

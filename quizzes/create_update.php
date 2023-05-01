@@ -12,6 +12,9 @@ $quiz = $dao->findById($id);
 
 if($quiz===null) {
     $quiz = new Quiz($id, $name, $description, $minimum_score);
+    var_dump($_SESSION["userId"]);
+    $developer = new Developer($_SESSION["userId"],null, null, null, null, null, null);
+    $quiz->setDeveloper($developer);
     $idInserido = $dao->create($quiz);
     // se precisar o id novo...
 } else {
