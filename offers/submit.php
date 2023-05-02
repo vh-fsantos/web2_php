@@ -22,7 +22,6 @@ foreach ($questions as $question) {
 
 // Loop over the received question IDs
 foreach ($question_ids as $question_id) {
-  var_dump($question_id);
   // Check if an answer was provided for this question
   if (isset($_POST['question_'.$question_id])) {
 

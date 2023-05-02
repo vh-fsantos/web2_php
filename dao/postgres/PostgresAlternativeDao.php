@@ -9,7 +9,6 @@ class PostgresAlternativeDao extends DAO implements AlternativeDao {
     
     public function create($alternative) {
 
-        var_dump($alternative);
 
         $query = "INSERT INTO " . $this->table_name . 
             " (description, is_correct, question_id) VALUES" .

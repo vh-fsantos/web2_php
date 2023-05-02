@@ -145,7 +145,6 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
     }
 
     public function findAllByQuizId($quiz_id){
-        var_dump($quiz_id);
         
         $questions = array();
     

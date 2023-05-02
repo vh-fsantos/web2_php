@@ -32,7 +32,6 @@ class PostgresQuizQuestionDao extends Dao implements QuizQuestionDao {
     }
 
     public function removeByProperty($property_value, $property) {
-        var_dump($property_value);
     
         $query = "DELETE FROM " . $this->table_name . 
                  " WHERE $property = :property_value";

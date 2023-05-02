@@ -33,7 +33,6 @@ function addQuestionsToQuiz($question_ids, $quiz, $factory) {
 
 if($quiz===null) {
     $quiz = new Quiz($id, $name, $description, $minimum_score, null);
-    var_dump($quiz);
     $developer = new Developer($_SESSION["userId"],null, null, null, null, null, null);
     $quiz->setDeveloper($developer);
     $idInserido = $dao->create($quiz);

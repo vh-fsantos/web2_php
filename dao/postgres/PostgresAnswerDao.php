@@ -9,7 +9,6 @@ class PostgresAnswerDao extends DAO implements AnswerDao {
     
     public function create($answer) {
 
-        var_dump($answer);
 
         $query = "INSERT INTO " . $this->table_name . 
             " (text, score, observation, question_id, alternative_id) VALUES" .
