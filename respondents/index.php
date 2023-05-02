@@ -7,11 +7,12 @@ include_once("../common/header.php");
 
 $isAdmin = FALSE;
 
-if (!isset($_SESSION["userType"]) || !($_SESSION["userType"] === "developer"))
+if (!$developer)
 {
   header("location: /index.php");
   exit;
 }
+
 
 $isAdmin = $_SESSION["isAdmin"];
 

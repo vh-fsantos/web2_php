@@ -1,15 +1,17 @@
 <?php 
 $page_title = "Criar Oferta";
 
-if (!isset($_SESSION["userType"]) || !($_SESSION["userType"] === "developer"))
-{
-  header("location: /index.php");
-  exit;
-}
+
 
 
 include_once("../common/facade.php");
 include_once("../common/header.php");
+
+if (!$developer)
+{
+  header("location: /index.php");
+  exit;
+}
 
 $daoQuiz = $factory->getQuizDao();
 $daoRespondent = $factory->getRespondentDao();
