@@ -7,6 +7,9 @@ require_once('PostgresQuizDao.php');
 require_once('PostgresQuestionDao.php');
 require_once('PostgresQuizQuestionDao.php');
 require_once('PostgresOfferDao.php');
+require_once('PostgresOfferAnswerDao.php');
+require_once('PostgresAnswerDao.php');
+require_once('PostgresSubmissionDao.php');
 
 class PostgresDaofactory extends DaoFactory 
 {
@@ -45,6 +48,12 @@ class PostgresDaofactory extends DaoFactory
     public function getAlternativeDao() { return new PostgresAlternativeDao($this->getConnection()); }
 
     public function getOfferDao() { return new PostgresOfferDao($this->getConnection()); }
+    
+    public function getOfferAnswerDao() { return new PostgresOfferAnswerDao($this->getConnection()); }
+    
+    public function getAnswerDao() { return new PostgresAnswerDao($this->getConnection()); }
+
+    public function getSubmissionDao() { return new PostgresSubmissionDao($this->getConnection()); }
 }
 
 ?>

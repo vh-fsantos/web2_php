@@ -5,6 +5,7 @@ class Question {
     private $description;
     private $questionType;
     private $image;
+    private $alternatives;
 
     public function __construct($id, $description, $questionType, $image)
     {
@@ -25,5 +26,8 @@ class Question {
 
     public function getImage() { return $this->image; }
     public function setImage($image) { $this->image = $image; }
+
+    public function getAlternatives() { return $this->alternatives; }
+    public function setAlternatives($alternatives) { $this->alternatives = $alternatives; }
 }
 ?>

@@ -99,6 +99,8 @@ class PostgresQuizDao extends DAO implements QuizDao {
         return $quiz;
     }
 
+    
+
     public function findAll() {
 
         $quizes = array();

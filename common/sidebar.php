@@ -2,13 +2,20 @@
 
 $admin = FALSE;
 $developer = FALSE;
+$respondent = FALSE;
 
 if (isset($_SESSION["isAdmin"]))
     $admin = $_SESSION["isAdmin"];
 
 if (isset($_SESSION["userType"]))
     $developer = $_SESSION["userType"] === "developer";
+
+if (isset($_SESSION["userType"]))
+    $respondent = $_SESSION["userType"] === "respondent";
 ?>
+
+
+
 
 <div class="col-md-2 bg-light">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -42,6 +49,14 @@ if (isset($_SESSION["userType"]))
                     echo '<a class="nav-link" href="/offers">Ofertas</a>';
                     echo '</li>';
                 }?>
+                <?php
+                if ($respondent){
+                    echo '<li class="nav-item">';
+                    echo '<a class="nav-link" href="/offers/list_respondents.php">Ofertas</a>';
+                    echo '</li>';
+                }
+                ?>
+
             </ul>
         </div>
     </nav>

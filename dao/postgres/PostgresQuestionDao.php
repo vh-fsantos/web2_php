@@ -119,6 +119,61 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
         
         return $questions;
     }
+
+    public function findAlternativesByQuestionId($question_id){
+        $alternatives = array();
+    
+        $query = "SELECT
+                    id, description, is_correct
+                FROM
+                    alternative
+                WHERE
+                    question_id = :question_id
+                ORDER BY
+                    id ASC";
+    
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindParam(':question_id', $question_id);
+        $stmt->execute();
+    
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $alternatives[] = new Alternative($id,$description,$is_correct);
+        }
+        
+        return $alternatives;
+    }
+
+    public function findAllByQuizId($quiz_id){
+        var_dump($quiz_id);
+        
+        $questions = array();
+    
+        $query = "SELECT
+                    q.id, q.description, q.question_type, q.image
+                FROM
+                    " . $this->table_name . " q
+                    INNER JOIN quiz_question qq ON qq.question_id = q.id
+                WHERE
+                    qq.quiz_id = :quiz_id
+                ORDER BY
+                    q.id ASC";
+    
+        $stmt = $this->conn->prepare( $query );
+        $stmt->bindValue(':quiz_id', $quiz_id);
+        $stmt->execute();
+    
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $alternatives = $this->findAlternativesByQuestionId($id);
+            $question = new Question($id,$description,$question_type,$image);
+            $question->setAlternatives($alternatives);
+            
+            $questions[] = $question;
+        }
+        
+        return $questions;
+    }
 }
 
 

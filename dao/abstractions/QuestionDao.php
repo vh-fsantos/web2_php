@@ -7,6 +7,7 @@ interface QuestionDao {
     public function update($quiz);
     public function findById($id);
     public function findAll();
+    public function findAllByQuizId($quiz_id);
 }
 
 ?>
