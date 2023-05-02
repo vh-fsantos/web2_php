@@ -53,7 +53,7 @@ require_once "../common/header.php";
 					<?php foreach ($alternatives as $index => $alternative) { ?>
 							<li class="list-group-item alternative">
 									<?php if ($question->getQuestionType() === 'single_choice') { ?>
-											<input type="radio" name="correct_alternative" value="<?= $index ?>" <?= $alternative->getIsCorrect() ? 'checked' : '' ?>>
+											<input type="radio" name="is_correct[]" value="<?= $index ?>" <?= $alternative->getIsCorrect() ? 'checked' : '' ?>>
 									<?php } else if ($question->getQuestionType() === 'multiple_choice') { ?>
 											<input type="checkbox" name="is_correct[]" value="<?= $index ?>" <?= $alternative->getIsCorrect() ? 'checked' : '' ?>>
 									<?php } ?>
@@ -68,7 +68,8 @@ require_once "../common/header.php";
 				<label for="image">Imagem:</label>
 				<input type="file" class="form-control-file" id="image" name="image">
 			</div>
-			<button type="submit" class="btn btn-primary">Criar</button>
+			<input type='hidden' name='id' value='<?php echo $question->getId();?>'/>
+			<button type="submit" class="btn btn-primary">Editar</button>
 		</form>
   </div>
 

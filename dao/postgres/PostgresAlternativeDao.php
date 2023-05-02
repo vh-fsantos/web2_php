@@ -145,6 +145,23 @@ class PostgresAlternativeDao extends DAO implements AlternativeDao {
             
             return $alternatives;
     }
+
+    public function removeByQuestionId($question_id){
+        $query = "DELETE FROM " . $this->table_name . 
+        " WHERE question_id = :question_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+        $stmt->bindParam(':question_id', $question_id);
+
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }    
+
+        return false;
+    }
 }
 
 

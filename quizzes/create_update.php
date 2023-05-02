@@ -16,23 +16,20 @@ $dao = $factory->getQuizDao();
 $quiz = $dao->findById($id);
 
 function addQuestionsToQuiz($question_ids, $quiz, $factory) {
+  if (!empty($question_ids)) {
+    foreach ($question_ids as $key => $question_id) {
+      $question = new Question($question_id, null, null, null);
+            
+      $quiz_question = new QuizQuestion(null, 1, 1);
 
-    if (!empty($question_ids)) {
-      
-      foreach ($question_ids as $key => $question_id) {
-  
-        $question = new Question($question_id, null, null, null);
-                
-        $quiz_question = new QuizQuestion(null, 1, 1);
-  
-        $quiz_question->setQuestion($question);
-        $quiz_question->setQuiz($quiz);
-  
-        $dao_quiz_question = $factory->getQuizQuestionDao();
-        $dao_quiz_question->create($quiz_question);
-      }
+      $quiz_question->setQuestion($question);
+      $quiz_question->setQuiz($quiz);
+
+      $dao_quiz_question = $factory->getQuizQuestionDao();
+      $dao_quiz_question->create($quiz_question);
     }
   }
+}
 
 if($quiz===null) {
     $quiz = new Quiz($id, $name, $description, $minimum_score, null);

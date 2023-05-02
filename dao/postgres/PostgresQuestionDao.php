@@ -60,10 +60,11 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
         $stmt = $this->conn->prepare($query);
 
         // bind parameters
+        $stmt->bindParam(':id', $question->getId());
         $stmt->bindParam(":description", $question->getDescription());
         $stmt->bindParam(":question_type", $question->getQuestionType());
         $stmt->bindParam(":image", $question->getImage());
-        $stmt->bindParam(':id', $question->getId());
+        
 
         // execute the query
         if($stmt->execute()){

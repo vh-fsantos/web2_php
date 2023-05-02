@@ -15,40 +15,44 @@ $is_correct = @$_POST["is_correct"];
 $dao = $factory->getQuestionDao();
 $question = $dao->findById($id);
 
+function saveAlternatives($alternatives, $is_correct, $question, $factory) {
+  if (!empty($alternatives)) {
+    foreach ($alternatives as $key => $description) {
+      $newAlternative = new Alternative(null, $description, null);
+      $newAlternative->setQuestion($question);
+      if (!empty($is_correct) && in_array($key, $is_correct)) {
+        $newAlternative->setIsCorrect(true);
+      }else{
+        $newAlternative->setIsCorrect(false);
+      }
+      $dao_alternative = $factory->getAlternativeDao();
+      $dao_alternative->create($newAlternative);
+    }
+  }
+}
+
 
 if($question===null) {
     $question = new Question($id, $description, $question_type, $image);
     $idInserido = $dao->create($question);
     $question->setId($idInserido);
-    
-    if (!empty($alternatives)) {
-      
-        foreach ($alternatives as $key => $description) {
-                  
-          $newAlternative = new Alternative(null, $description, null);
 
-          $newAlternative->setQuestion($question);
-      
-          if (!empty($is_correct) && in_array($key, $is_correct)) {
-            $newAlternative->setIsCorrect(true);
-          }else{
-            $newAlternative->setIsCorrect(false);
-          }
-          
-          $dao_alternative = $factory->getAlternativeDao();
-          $dao_alternative->create($newAlternative);
-        }
-      }
-      
+    saveAlternatives($alternatives, $is_correct, $question, $factory);
+
 } else {
-    $question->setName($name);
+    $question->setId($id);
     $question->setDescription($description);
     $question->setQuestionType($question_type);
     $question->setImage($image);
     $dao->update($question);
+
+    $dao_alternative = $factory->getAlternativeDao();
+    $dao_alternative->removeByQuestionId(intval($question->getId()));
+
+    saveAlternatives($alternatives, $is_correct, $question, $factory);
 }
 
 
-header("Location: index.php");
+header("Location: list.php");
 
 ?>
