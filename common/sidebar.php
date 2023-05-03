@@ -24,9 +24,9 @@ if (isset($_SESSION["userType"]))
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav flex-column">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
-                </li>
+                </li> -->
                 <?php 
                 if ($admin){
                     echo '<li class="nav-item">';
