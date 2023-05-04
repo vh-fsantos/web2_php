@@ -43,9 +43,10 @@ if ($offers)
 	echo "<tbody>";
 
 	foreach ($offers as &$offer) {
+        $date = date('d/m/Y H:i', strtotime($offer->getDate()));
 		echo "<tr>";
 		echo "<td>{$offer->getId()}</td>";
-		echo "<td>{$offer->getDate()}</td>";
+		echo "<td>{$date}</td>";
 		echo "<td>{$quizDao->findById($offer->getQuiz()->getId())->getName()}</td>";
         echo "<td>{$respondentDao->findById($offer->getRespondent()->getId())->getName()}</td>";
         echo "<td>";

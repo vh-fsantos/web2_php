@@ -20,6 +20,14 @@ $allQuizzes = $daoQuiz->findAll();
 $allRespondents = $daoRespondent->findAll();
 
 ?>
+  <script>
+    $(document).ready(function(){
+      $('.datetimepicker').datetimepicker(
+        {format: 'd/m/Y h:i'}
+      
+      );
+    });
+  </script>
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -27,7 +35,7 @@ $allRespondents = $daoRespondent->findAll();
           <form action="/offers/create.php" method="post">
             <div class="form-group">
               <label for="date">Data</label>
-              <input type="date" class="form-control" id="date" name="date" required>
+              <input type="text" class="form-control datetimepicker" id="date" name="date" required>
             </div>
             <div class="form-group">
               <label for="quiz_id">Selecione um Questionário</label>
