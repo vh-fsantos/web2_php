@@ -6,6 +6,7 @@ class Question {
     private $questionType;
     private $image;
     private $alternatives;
+    private $score;
 
     public function __construct($id, $description, $questionType, $image)
     {
@@ -29,5 +30,10 @@ class Question {
 
     public function getAlternatives() { return $this->alternatives; }
     public function setAlternatives($alternatives) { $this->alternatives = $alternatives; }
+
+    public function getScore() { return $this->score; }
+    public function setScore($score) { $this->score = $score; }
+
+    
 }
 ?>

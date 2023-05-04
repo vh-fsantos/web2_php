@@ -1,6 +1,6 @@
 <?php 
 
-$page_title = "Elaboradores";
+$page_title = "Listagem de Elaboradores";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");

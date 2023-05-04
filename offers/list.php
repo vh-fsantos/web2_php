@@ -1,6 +1,6 @@
 <?php 
 
-$page_title = "Ofertas";
+$page_title = "Listagem de Ofertas";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");
@@ -52,7 +52,10 @@ if ($offers)
 		echo "<td>{$quizDao->findById($offer->getQuiz()->getId())->getName()}</td>";
         echo "<td>{$respondentDao->findById($offer->getRespondent()->getId())->getName()}</td>";
         if ($offer->getSubmission() !== null) {
-            echo '<td><i class="fas fa-check text-success"></i></td>';
+            echo '<td>';
+            echo '<i class="fas fa-check text-success"></i>';
+            echo "<p>Enviado em " . date('d/m/Y H:i', strtotime($offer->getSubmission()->getDate()))."</p>";
+            echo '</td>';
         } else {
             echo '<td><i class="fas fa-times text-danger"></i></td>';
         }

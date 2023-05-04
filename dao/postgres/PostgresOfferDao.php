@@ -121,34 +121,72 @@ class PostgresOfferDao extends DAO implements OfferDao
     }
 
     public function findAllWithSubmissionInfo()
-{
-    $offers = array();
-
-    $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id 
-              FROM " . $this->table_name . " o
-              LEFT JOIN submission s ON o.id = s.offer_id
-              ORDER BY o.id ASC";
-
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-        extract($row);
-        $offer = new Offer($id, $date);
-        $offer->setQuiz(new Quiz($quiz_id, null, null, null, null));
-        $offer->setRespondent(new Respondent($respondent_id, null, null, null, null, null));
+        $offers = array();
 
-        if (!empty($submission_id)) {
-            $submission = new Submission($submission_id, $date, $offer->getId());
-            $offer->setSubmission($submission);
+        $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id , s.date AS submission_date
+                FROM " . $this->table_name . " o
+                LEFT JOIN submission s ON o.id = s.offer_id
+                ORDER BY o.id ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            extract($row);
+            $offer = new Offer($id, $date);
+            $offer->setQuiz(new Quiz($quiz_id, null, null, null, null));
+            $offer->setRespondent(new Respondent($respondent_id, null, null, null, null, null));
+
+            if (!empty($submission_id)) {
+                $submission = new Submission($submission_id, $submission_date, $offer->getId());
+                $offer->setSubmission($submission);
+            }
+
+            $offers[] = $offer;
         }
-
-        $offers[] = $offer;
+        
+        return $offers;
+        
     }
-    
-    return $offers;
-}
+
+    public function findAllWithSubmissionInfoAndFilterByDate(){
+ 
+        $offers = array();
+
+        // Get current date and time
+        $current_date_time = date('Y-m-d H:i:s');
+
+        $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id, s.date as submission_date 
+                FROM " . $this->table_name . " o
+                LEFT JOIN submission s ON o.id = s.offer_id
+                WHERE o.date <= :current_date_time
+                ORDER BY o.id ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':current_date_time', $current_date_time);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            extract($row);
+            $offer = new Offer($id, $date);
+            $offer->setQuiz(new Quiz($quiz_id, null, null, null, null));
+            $offer->setRespondent(new Respondent($respondent_id, null, null, null, null, null));
+
+            if (!empty($submission_id)) {
+                $submission = new Submission($submission_id, $submission_date, $offer->getId());
+                $offer->setSubmission($submission);
+            }
+
+            $offers[] = $offer;
+        }
+        
+        return $offers;
+
+
+    }
 }
 
 ?>

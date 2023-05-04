@@ -6,77 +6,86 @@ $id = @$_POST["id"];
 $quiz_id = @$_POST["quiz_id"];
 
 $dao_answer = $factory->getAnswerDao();
+$dao_alternative = $factory->getAlternativeDao();
 $dao_submission = $factory->getSubmissionDao();
 $dao_offer_answer = $factory->getOfferAnswerDao();
 
 $dao_question = $factory->getQuestionDao();
-$questions = $dao_question->findAllByQuizId($quiz_id);
+$questions = $dao_question->findAllByQuizIdWithScores($quiz_id);
+
 
 $offer = new Offer($id, null);
 
-$question_ids = array();
-foreach ($questions as $question) {
-  $question_ids[] = $question->getId();
-}
-
+$total_score = 0;
+$results_table = '';
 
 // Loop over the received question IDs
-foreach ($question_ids as $question_id) {
-  // Check if an answer was provided for this question
-  if (isset($_POST['question_'.$question_id])) {
+foreach ($questions as $question) {
+    $selected_alternatives = @$_POST['question_'.$question->getId()];
 
-      // Get the ID of the selected alternative(s)
-      $selected_alternatives = $_POST['question_'.$question_id];
+    $result_row = '<tr>';
+    $result_row .= '<td>'.$question->getDescription().'</td>';
 
-      if (!is_array($selected_alternatives)) {
-        
-        $question = new Question($question_id, null, null, null);
-        $answer = new Answer(null, $selected_alternatives, 1, null);
-        $answer->setQuestion($question);
-
-        $idInserido = $dao_answer->create($answer);
-
-        $answer->setId($idInserido);
-
-        $offer_answer = new OfferAnswer(null, null, null);
-
-        
-        $offer_answer->setOffer($offer);
-        $offer_answer->setAnswer($answer);
-        $dao_offer_answer->create($offer_answer);
-
-      }else{
-        foreach ($selected_alternatives as $alternative_id) {
-            $question = new Question($question_id, null, null, null);
-            $alternative = new Alternative($alternative_id, null, null);
-
-            $answer = new Answer(null, null, 1, null);
-            $answer->setQuestion($question);
-            $answer->setAlternative($question);
-
-            $idInserido = $dao_answer->create($answer);
-            $answer->setId($idInserido);
-
-            $offer_answer = new OfferAnswer(null, null, null);
-
-            $offer_answer->setOffer($offer);
-            $offer_answer->setAnswer($answer);
-            $dao_offer_answer->create($offer_answer);
+    // If the question is a single choice or multiple choice question
+    if ($question->getQuestionType() == 'single_choice' || $question->getQuestionType() == 'multiple_choice') {
+        $correct_alternatives = $dao_alternative->getCorrectAlternatives($question->getId());
+        $result_row .= '<td>';
+        if ($correct_alternatives) {
+            $correct_alternative_ids = array_map(function($alternative) { return $alternative->getId(); }, $correct_alternatives);
+            if (!is_array($selected_alternatives)) {
+              $selected_alternatives = array_map('intval', explode(',', $selected_alternatives));
+            }
+            if ($correct_alternative_ids == $selected_alternatives) {
+                $result_row .= '<span class="text-success">Correct</span>';
+                $score += $question->getScore();
+                $total_score+= $question->getScore();
+            } else {
+                $result_row .= '<span class="text-danger">Incorrect</span>';
+            }
+        } else {
+            $result_row .= '<span class="text-warning">Not evaluated</span>';
         }
-      }
+        $result_row .= '</td>';
+    } else { // If the question is an essay question
+        $result_row .= '<td>'.$selected_alternatives.'</td>';
+    }
 
-      // Create an Answer object for each selected alternative
-      
-  }
+    $result_row .= '<td>'.$question->getScore().'</td>';
+    $result_row .= '</tr>';
+    $results_table .= $result_row;
 }
-
 
 $submission = new Submission(null, null);
 $submission->setOffer($offer);
 $dao_submission->create($submission);
 
-header("location: /offers/list_respondents.php");
+$results_html = '
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Result</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            '.$results_table.'
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total Score</th>
+                <td colspan="2">'.$total_score.'</td>
+            </tr>
+        </tfoot>
+    </table>
+';
 
+// echo $results_html;
+session_start();
+// Store the results HTML in the session
+$_SESSION['results_html'] = $results_html;
 
-
+// Redirect to the next page
+header("Location: /offers/results.php");
+exit;
 ?>

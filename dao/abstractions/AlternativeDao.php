@@ -10,6 +10,7 @@ interface AlternativeDao
     public function findAll();
     public function findAllByQuestionId($question_id);
     public function removeByQuestionId($question_id);
+    public function getCorrectAlternatives($question_id);
 }
 
 ?>

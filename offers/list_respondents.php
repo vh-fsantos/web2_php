@@ -1,6 +1,6 @@
 <?php 
 
-$page_title = "Ofertas";
+$page_title = "Listagem de Ofertas";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");
@@ -21,7 +21,7 @@ $offerDao = $factory->getOfferDao();
 $quizDao = $factory->getQuizDao();
 $respondentDao = $factory->getRespondentDao();
 
-$offers = $offerDao->findAll();
+$offers = $offerDao->findAllWithSubmissionInfoAndFilterByDate();
 
 
 if ($offers)
@@ -33,22 +33,27 @@ if ($offers)
 	echo "<th>Data</th>";
 	echo "<th>Questionário</th>";
 	echo "<th>Nota para aprovação</th>";
-    echo "<th>Ações</th>";
+  echo "<th>Ações</th>";
 	echo "</tr>";
 	echo "</thead>";
 	echo "<tbody>";
 
 	foreach ($offers as &$offer) {
+		$date = date('d/m/Y H:i', strtotime($offer->getDate()));
 		echo "<tr>";
 		echo "<td>{$offer->getId()}</td>";
-		echo "<td>{$offer->getDate()}</td>";
+		echo "<td>{$date}</td>";
 		echo "<td>{$quizDao->findById($offer->getQuiz()->getId())->getName()}</td>";
     echo "<td>{$quizDao->findById($offer->getQuiz()->getId())->getMinimumScore()}</td>";
-    echo "<td>";
-    echo "<a href='/offers/quiz.php?id={$offer->getId()}' class='btn btn-info mr-1'>";
-    echo "<span class='fas fa-edit'></span> Responder";
-    echo "</a>";
-    echo "</td>";
+		echo "<td>";
+		if ($offer->getSubmission()) {
+				echo "Enviado em " . date('d/m/Y H:i', strtotime($offer->getSubmission()->getDate()));
+		} else {
+				echo "<a href='/offers/quiz.php?id={$offer->getId()}' class='btn btn-info mr-1'>";
+				echo "<span class='fas fa-edit'></span> Responder";
+				echo "</a>";
+		}
+		echo "</td>";
     echo "</tr>";
 	}
 

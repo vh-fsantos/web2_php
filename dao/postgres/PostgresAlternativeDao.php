@@ -161,6 +161,22 @@ class PostgresAlternativeDao extends DAO implements AlternativeDao {
 
         return false;
     }
+
+    public function getCorrectAlternatives($question_id) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE question_id = :question_id AND is_correct::boolean = true";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':question_id', $question_id);
+        $stmt->execute();
+    
+        $alternatives = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $alternative = new Alternative($id, $description, $is_correct, $question_id);
+            $alternatives[] = $alternative;
+        }
+        return $alternatives;
+    }
+
 }
 
 

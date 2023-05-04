@@ -73,6 +73,6 @@ require_once "../common/header.php";
       </table>
     </div>
 
-    <button type="submit" class="btn btn-primary">Editar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 </div>

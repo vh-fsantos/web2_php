@@ -1,6 +1,6 @@
 <?php 
 
-$page_title = "Respondentes";
+$page_title = "Listagem de Respondentes";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");

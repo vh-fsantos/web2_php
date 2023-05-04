@@ -28,7 +28,7 @@ if ($respondent)
         $_SESSION["username"] = stripslashes($respondent->getName()); 
         $_SESSION["userType"]= "respondent";
         $_SESSION["isAdmin"]= FALSE;
-        header("location: /index.php");
+        header("location: /offers/list_respondents.php");
         exit;
     } 
     else

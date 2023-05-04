@@ -156,7 +156,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
                 WHERE
                     qq.quiz_id = :quiz_id
                 ORDER BY
-                    q.id ASC";
+                    qq.score ASC";
     
         $stmt = $this->conn->prepare( $query );
         $stmt->bindValue(':quiz_id', $quiz_id);
@@ -171,6 +171,33 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
             $questions[] = $question;
         }
         
+        return $questions;
+    }
+
+    public function findAllByQuizIdWithScores($quiz_id){
+        
+        $questions = array();
+
+        $query = "SELECT q.id, q.description, q.question_type, q.image, qq.score
+                FROM " . $this->table_name . " q
+                INNER JOIN quiz_question qq ON qq.question_id = q.id
+                WHERE qq.quiz_id = :quiz_id
+                ORDER BY q.id ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':quiz_id', $quiz_id);
+        $stmt->execute();
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $alternatives = $this->findAlternativesByQuestionId($id);
+            $question = new Question($id, $description, $question_type, $image);
+            $question->setAlternatives($alternatives);
+            $question->setScore($score);
+
+            $questions[] = $question;
+        }
+
         return $questions;
     }
 }

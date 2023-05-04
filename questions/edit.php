@@ -69,7 +69,7 @@ require_once "../common/header.php";
 				<input type="file" class="form-control-file" id="image" name="image">
 			</div>
 			<input type='hidden' name='id' value='<?php echo $question->getId();?>'/>
-			<button type="submit" class="btn btn-primary">Editar</button>
+			<button type="submit" class="btn btn-primary">Salvar</button>
 		</form>
   </div>
 
