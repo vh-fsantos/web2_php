@@ -25,7 +25,7 @@ $respondentDao = $factory->getRespondentDao();
 $offers = $offerDao->findAll();
 
 echo "<a href='/offers/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Nova";
+echo "<span class='fas fa-plus'></span> Criar";
 echo "</a>";
 
 if ($offers)

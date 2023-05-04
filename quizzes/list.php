@@ -15,7 +15,7 @@ $dao = $factory->getQuizDao();
 $quizzes = $dao->findAll();
 
 echo "<a href='/quizzes/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Novo";
+echo "<span class='fas fa-plus'></span> Criar";
 echo "</a>";
 
 // exibe os questionários, se houver algum

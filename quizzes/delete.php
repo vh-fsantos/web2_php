@@ -7,7 +7,7 @@ $quiz = new Quiz($id, null, null, null, null);
 $dao = $factory->getQuizDao();
 $dao->removeById($id);
 
-header("Location: /quizzes/list.php");
+header("location: /quizzes/list.php");
 exit;
 
 ?>

@@ -52,6 +52,6 @@ if($quiz===null) {
 }
 
 
-header("Location: list.php");
+header("location: /quizzes/list.php");
 
 ?>

@@ -13,7 +13,7 @@ $offer->setRespondent(new Respondent($respondent_id, null, null, null, null, nul
 $dao = $factory->getOfferDao();
 $dao->create($offer);
 
-header("location: /offers");
+header("location: /offers/list.php");
 exit;
 
 ?>

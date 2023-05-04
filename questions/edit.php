@@ -30,7 +30,7 @@ require_once "../common/header.php";
   </style>
 
   <div class="container">
-  <h1 class="mt-4 mb-4">Registro de Questões</h1>
+  <h1 class="mt-4 mb-4">Editar Questão</h1>
 		<form method="POST" action="/questions/create_update.php" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="description">Descrição:</label>

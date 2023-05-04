@@ -7,7 +7,7 @@ $id = @$_GET["id"];
 $dao = $factory->getDeveloperDao();
 $dao->removeById($id);
 
-header("Location: list.php");
+header("location: /developers/list.php");
 exit;
 
 ?>

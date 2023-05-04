@@ -53,6 +53,6 @@ if($question===null) {
 }
 
 
-header("Location: list.php");
+header("location: /questions/list.php");
 
 ?>

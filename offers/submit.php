@@ -75,7 +75,7 @@ $submission = new Submission(null, null);
 $submission->setOffer($offer);
 $dao_submission->create($submission);
 
-header("Location: list_respondents.php");
+header("location: /offers/list_respondents.php");
 
 
 

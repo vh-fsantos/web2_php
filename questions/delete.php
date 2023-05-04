@@ -7,7 +7,7 @@ $question = new Question($id, null, null, null);
 $dao = $factory->getQuestionDao();
 $dao->removeById($id);
 
-header("Location: /questions/list.php");
+header("location: /questions/list.php");
 exit;
 
 ?>

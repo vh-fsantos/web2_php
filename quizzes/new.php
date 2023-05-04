@@ -1,13 +1,13 @@
 <?php
 require_once "../common/facade.php";
 
-$page_title = "Questionários - Novo";
+$page_title = "Questionários - Criar";
 require_once "../common/header.php";
 
 ?>
 
   <div class="container">
-    <h1 class="mt-4 mb-4">Registro de Questionários</h1>
+    <h1 class="mt-4 mb-4">Criar Questionário</h1>
     <form action="/quizzes/create_update.php" method=post>
       <div class="form-group">
         <label for="name">Nome:</label>

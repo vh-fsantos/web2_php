@@ -17,7 +17,7 @@ $dao = $factory->getDeveloperDao();
 $developers = $dao->findAll();
 
 echo "<a href='/developers/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Novo";
+echo "<span class='fas fa-plus'></span> Criar";
 echo "</a>";
 
 if ($developers)

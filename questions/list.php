@@ -17,7 +17,7 @@ $questions = $dao->findAll();
 // exibe as questões, se houver alguma
 
 echo "<a href='/questions/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Novo";
+echo "<span class='fas fa-plus'></span> Criar";
 echo "</a>";
 
 if ($questions) {

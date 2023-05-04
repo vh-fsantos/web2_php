@@ -1,5 +1,5 @@
 <?php 
-$page_title = "Criar Respondente";
+$page_title = "Respondentes - Criar";
 
 include_once("../common/facade.php");
 include_once("../common/header.php");
@@ -8,7 +8,7 @@ include_once("../common/header.php");
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <h2 class="mb-4">Registro de Respondentes</h2>
+          <h2 class="mb-4">Criar Respondente</h2>
           <form action="create.php" method="post">
             <div class="form-group">
               <label for="login">Login</label>
