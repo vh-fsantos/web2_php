@@ -30,7 +30,7 @@ if (isset($_SESSION["userType"]))
                 <?php 
                 if ($admin){
                     echo '<li class="nav-item">';
-                    echo '<a class="nav-link" href="/developers">Elaboradores</a>';
+                    echo '<a class="nav-link" href="/developers/list.php">Elaboradores</a>';
                     echo '</li>';
                 }
                 ?>
