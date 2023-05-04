@@ -7,7 +7,7 @@ $id = @$_GET["id"];
 $dao = $factory->getRespondentDao();
 $dao->removeById($id);
 
-header("Location: /respondents");
+header("Location: list.php");
 exit;
 
 ?>

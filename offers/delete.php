@@ -7,7 +7,7 @@ $id = @$_GET["id"];
 $dao = $factory->getOfferDao();
 $dao->removeById($id);
 
-header("Location: /offers");
+header("Location: list.php");
 exit;
 
 ?>

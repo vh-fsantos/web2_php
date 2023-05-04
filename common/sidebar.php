@@ -37,7 +37,7 @@ if (isset($_SESSION["userType"]))
                 <?php
                 if ($developer){
                     echo '<li class="nav-item">';
-                    echo '<a class="nav-link" href="/respondents">Respondentes</a>';
+                    echo '<a class="nav-link" href="/respondents/list.php">Respondentes</a>';
                     echo '</li>';
                     echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/quizzes/list.php">Questionários</a>';
@@ -46,7 +46,7 @@ if (isset($_SESSION["userType"]))
                     echo '<a class="nav-link" href="/questions/list.php">Questões</a>';
                     echo '</li>';
                     echo '<li class="nav-item">';
-                    echo '<a class="nav-link" href="/offers">Ofertas</a>';
+                    echo '<a class="nav-link" href="/offers/list.php">Ofertas</a>';
                     echo '</li>';
                 }?>
                 <?php

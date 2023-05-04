@@ -41,7 +41,7 @@ if ($questions) {
 		echo "<td>{$question->getQuestionType()}</td>";
 		echo "<td>";
 		// botão para alterar uma questão
-		echo "<a href='/questions/edit.php?id={$question->getId()}' class='btn btn-info'>";
+		echo "<a href='/questions/edit.php?id={$question->getId()}' class='btn btn-info mr-1'>";
 		echo "<span class='fas fa-edit'></span> Alterar";
 		echo "</a>";
 		// botão para remover uma questão

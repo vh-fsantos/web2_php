@@ -40,7 +40,7 @@ if ($quizzes) {
 		echo "<td>{$quiz->getMinimumScore()}</td>";
 		echo "<td>";
 		// botão para alterar um questionário
-		echo "<a href='/quizzes/edit.php?id={$quiz->getId()}' class='btn btn-info'>";
+		echo "<a href='/quizzes/edit.php?id={$quiz->getId()}' class='btn btn-info mr-1'>";
 		echo "<span class='fas fa-edit'></span> Alterar";
 		echo "</a>";
 		// botão para remover um questionário
