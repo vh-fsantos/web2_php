@@ -6,6 +6,7 @@ class Offer
     private $date;
     private $quiz;
     private $respondent;
+    private $submission;
 
     public function __construct($id, $date)
     {
@@ -24,6 +25,9 @@ class Offer
 
     public function getRespondent() { return $this->respondent; }
     public function setRespondent($respondent) { $this->respondent = $respondent; }
+
+    public function getSubmission() { return $this->submission; }
+    public function setSubmission($submission) { $this->submission = $submission; }
 }
 
 ?>

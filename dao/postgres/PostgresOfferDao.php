@@ -119,6 +119,36 @@ class PostgresOfferDao extends DAO implements OfferDao
         
         return $offers;
     }
+
+    public function findAllWithSubmissionInfo()
+{
+    $offers = array();
+
+    $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id 
+              FROM " . $this->table_name . " o
+              LEFT JOIN submission s ON o.id = s.offer_id
+              ORDER BY o.id ASC";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+    {
+        extract($row);
+        $offer = new Offer($id, $date);
+        $offer->setQuiz(new Quiz($quiz_id, null, null, null, null));
+        $offer->setRespondent(new Respondent($respondent_id, null, null, null, null, null));
+
+        if (!empty($submission_id)) {
+            $submission = new Submission($submission_id, $date, $offer->getId());
+            $offer->setSubmission($submission);
+        }
+
+        $offers[] = $offer;
+    }
+    
+    return $offers;
+}
 }
 
 ?>

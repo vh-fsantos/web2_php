@@ -8,6 +8,7 @@ interface OfferDao
     public function update($offer);
     public function findById($id);
     public function findAll();
+    public function findAllWithSubmissionInfo();
 }
 
 ?>
