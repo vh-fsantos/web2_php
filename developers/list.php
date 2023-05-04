@@ -47,7 +47,7 @@ if ($developers)
     echo "<td>{$dev->getInstitution()}</td>";
     echo "<td>{$adminText}</td>";
     echo "<td>";
-    // echo "<a href='/developers/update.php?id={$dev->getId()}' class='btn btn-info mr-1'>";
+    // echo "<a href='/developers/edit.php?id={$dev->getId()}' class='btn btn-info mr-1'>";
     echo "<button class='btn btn-info mr-1' disabled>";
     echo "<span class='fas fa-edit'></span> Alterar";
     echo "</button>";
