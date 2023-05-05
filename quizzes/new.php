@@ -25,7 +25,7 @@ require_once "../common/header.php";
       <!-- Tabela de questões -->
     <div class="form-group">
       <label for="question_list">Questões:</label>
-       
+      <div class='table-responsive'>
       <table class="table table-striped" id="question-table">
         <thead>
           <tr>
@@ -50,6 +50,7 @@ require_once "../common/header.php";
           ?>
         </tbody>
       </table>
+        </div>
     </div>
     
       <button type="submit" class="btn btn-primary">Criar</button>

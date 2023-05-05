@@ -21,7 +21,9 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="/">Quizzes.com</a>
 			<div id="navbarNav">
-				<ul class="navbar-nav ml-auto">
+				<ul class="navbar-nav ml-auto" style="display: flex;
+    flex-direction: row;
+    gap: 10px;">
 					<?php
 						include_once "common.php";
 

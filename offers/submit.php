@@ -60,6 +60,7 @@ $submission->setOffer($offer);
 $dao_submission->create($submission);
 
 $results_html = '
+    <div class="table-responsive">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -78,6 +79,7 @@ $results_html = '
             </tr>
         </tfoot>
     </table>
+    </div>
 ';
 
 // echo $results_html;

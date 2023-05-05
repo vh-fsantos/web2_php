@@ -22,6 +22,7 @@ echo "</a>";
 
 if ($developers)
 {
+  echo "<div class='table-responsive'>";
   echo "<table class='table table-hover table-bordered'>";
 	echo "<thead class='thead-light'>";
 	echo "<tr>";
@@ -62,6 +63,7 @@ if ($developers)
 
   echo "</tbody>";
 	echo "</table>";
+  echo "</div>";
 }
 
 echo "</section>";

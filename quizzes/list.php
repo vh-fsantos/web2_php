@@ -20,7 +20,7 @@ echo "</a>";
 
 // exibe os questionários, se houver algum
 if ($quizzes) {
- 
+	echo "<div class='table-responsive'>";
 	echo "<table class='table table-hover table-bordered'>";
 	echo "<thead class='thead-light'>";
 	echo "<tr>";
@@ -53,6 +53,7 @@ if ($quizzes) {
 	}
 	echo "</tbody>";
 	echo "</table>";
+	echo "</div>";
 }
  
 

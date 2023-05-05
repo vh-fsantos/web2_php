@@ -21,7 +21,7 @@ echo "<span class='fas fa-plus'></span> Criar";
 echo "</a>";
 
 if ($questions) {
- 
+	echo "<div class='table-responsive'>";
 	echo "<table class='table table-hover table-bordered'>";
 	echo "<thead class='thead-light'>";
 	echo "<tr>";
@@ -54,6 +54,7 @@ if ($questions) {
 	}
 	echo "</tbody>";
 	echo "</table>";
+	echo "</div>";
 }
  
 

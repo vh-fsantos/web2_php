@@ -31,6 +31,7 @@ echo "</a>";
 
 if ($offers)
 {
+    echo "<div class='table-responsive'>";
     echo "<table class='table table-hover table-bordered'>";
 	echo "<thead class='thead-light'>";
 	echo "<tr>";
@@ -81,6 +82,7 @@ if ($offers)
 
     echo "</tbody>";
 	echo "</table>";
+    echo "</div>";
 }
 
 echo "</section>";
