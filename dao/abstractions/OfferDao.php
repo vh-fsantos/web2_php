@@ -9,7 +9,7 @@ interface OfferDao
     public function findById($id);
     public function findAll();
     public function findAllWithSubmissionInfo();
-    public function findAllWithSubmissionInfoAndFilterByDate();
+    public function findAllWithSubmissionInfoAndFilterByDate($respondent_id);
 }
 
 ?>

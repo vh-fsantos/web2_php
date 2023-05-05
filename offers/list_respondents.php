@@ -14,6 +14,7 @@ if (!isset($_SESSION["userType"]) || !($_SESSION["userType"] === "respondent"))
 }
 
 $isAdmin = $_SESSION["isAdmin"];
+$userId = $_SESSION["userId"];
 
 echo "<section class='container mt-4'>";
 
@@ -21,11 +22,12 @@ $offerDao = $factory->getOfferDao();
 $quizDao = $factory->getQuizDao();
 $respondentDao = $factory->getRespondentDao();
 
-$offers = $offerDao->findAllWithSubmissionInfoAndFilterByDate();
+$offers = $offerDao->findAllWithSubmissionInfoAndFilterByDate($userId);
 
 
 if ($offers)
 {
+	echo "<div class='table-responsive'>";
     echo "<table class='table table-hover table-bordered'>";
 	echo "<thead class='thead-light'>";
 	echo "<tr>";
@@ -59,6 +61,7 @@ if ($offers)
 
     echo "</tbody>";
 	echo "</table>";
+	echo "</div>";
 }
 
 echo "</section>";

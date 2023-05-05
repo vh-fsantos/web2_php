@@ -12,7 +12,7 @@ $respondet = new Respondent(null, $login, $password, $name, $email, $phone);
 $dao = $factory->getRespondentDao();
 $dao->create($respondet);
 
-header("location: /respondents/list.php");
+header("location: /login/");
 exit;
 
 ?>

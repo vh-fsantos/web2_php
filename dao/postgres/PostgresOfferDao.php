@@ -151,7 +151,7 @@ class PostgresOfferDao extends DAO implements OfferDao
         
     }
 
-    public function findAllWithSubmissionInfoAndFilterByDate(){
+    public function findAllWithSubmissionInfoAndFilterByDate($respondent_id){
  
         $offers = array();
 
@@ -162,10 +162,12 @@ class PostgresOfferDao extends DAO implements OfferDao
                 FROM " . $this->table_name . " o
                 LEFT JOIN submission s ON o.id = s.offer_id
                 WHERE o.date <= :current_date_time
+                AND o.respondent_id = :respondent_id
                 ORDER BY o.id ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':current_date_time', $current_date_time);
+        $stmt->bindParam(':respondent_id', $respondent_id);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
