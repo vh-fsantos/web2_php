@@ -15,12 +15,15 @@ class PostgresOfferDao extends DAO implements OfferDao
         " (:date, :quiz_id, :respondent_id)";
 
         $stmt = $this->conn->prepare($query);
-        $date = $offer->getDate();
+        $dateString = $offer->getDate();
+
+        $date = DateTime::createFromFormat('d/m/Y h:i a', $dateString);
+        $formattedDate = $date->format('Y-m-d H:i:s');
         $quiz_id = $offer->getQuiz()->getId();
         $respondent_id = $offer->getRespondent()->getId();
         
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":date", $date);
+        $stmt->bindParam(":date", $formattedDate);
         $stmt->bindParam(":quiz_id", $quiz_id);
         $stmt->bindParam(":respondent_id", $respondent_id);
 
@@ -120,16 +123,19 @@ class PostgresOfferDao extends DAO implements OfferDao
         return $offers;
     }
 
-    public function findAllWithSubmissionInfo()
+    public function findAllWithSubmissionInfo($offset, $limit)
     {
         $offers = array();
 
-        $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id , s.date AS submission_date
+        $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id, s.date AS submission_date
                 FROM " . $this->table_name . " o
                 LEFT JOIN submission s ON o.id = s.offer_id
                 ORDER BY o.id ASC";
+                // LIMIT :limit OFFSET :offset";
 
         $stmt = $this->conn->prepare($query);
+        // $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        // $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -148,8 +154,8 @@ class PostgresOfferDao extends DAO implements OfferDao
         }
         
         return $offers;
-        
     }
+
 
     public function findAllWithSubmissionInfoAndFilterByDate($respondent_id){
  
@@ -189,6 +195,18 @@ class PostgresOfferDao extends DAO implements OfferDao
 
 
     }
+
+    public function countAll(){
+
+        $query = "SELECT id FROM " . $this->table_name . "";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        return $num;                                            
+    }       
 }
 
 ?>
