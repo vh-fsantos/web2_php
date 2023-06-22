@@ -48,7 +48,7 @@ if ($developers)
     echo "<td>{$dev->getInstitution()}</td>";
     echo "<td>{$adminText}</td>";
     echo "<td>";
-    echo "<button class='btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#modal'>";
+    echo "<button class='update-button btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#modal'>";
     echo "<span class='fas fa-edit'></span> Alterar";
     echo "</button>";
     echo "<a href='/developers/delete.php?id={$dev->getId()}' class='btn btn-danger mr-1'";
@@ -66,8 +66,9 @@ if ($developers)
 
 echo "</section>";
 
+$idForm = "update-form";
 $modalTitle = "Atualizar Cadastro";
-$modalAction = "/developers/create.php";
+$modalAction = "/developers/update.php";
 $modalSubmitText = "Atualizar";
 $modalInputs = [ array("name" => "Login", "type" => "text"),
                 array("name" => "Password", "type" => "password"),
@@ -81,6 +82,3 @@ include_once("../common/modal.php");
 
 include_once("../common/footer.php"); 
 ?>
-
-
-

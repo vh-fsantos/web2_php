@@ -18,8 +18,6 @@ if(!$login || !$password)
 $dao = $factory->getDeveloperDao();
 $developer = $dao->findByLogin($login);
 
-$errors = FALSE;
-
 if ($developer)
 {
     if(!strcmp($password, $developer->getPassword())) 
@@ -31,14 +29,8 @@ if ($developer)
         header("location: /offers/list.php");
         exit;
     }
-    else
-        $errors = TRUE;
 }
 
-if ($errors == TRUE)
-{
-    header("location: /login");
-    exit;
-}
+header("location: /login");
 
 ?>

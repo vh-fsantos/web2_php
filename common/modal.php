@@ -1,3 +1,19 @@
+<script>
+    $(document).ready(function() {
+        $(".update-button").click(function() {
+            console.log('entrou')
+            let form = $('#<?php echo $idForm; ?>')
+
+            if (form.attr('action') !== undefined)
+                form.removeAttr('action')
+            
+            var dataValue = $(this).data('value')
+            var actionUrl = `<?php echo $modalAction; ?>?id=${dataValue}`
+            form.attr('action', actionUrl)
+        });
+    })
+</script>
+
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="updateModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,7 +24,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action=<?php echo $modalAction; ?> method="post">
+                <form id="<?php echo $idForm; ?>" method="post">
                     <?php foreach ($modalInputs as $input) { 
                             $inputName = $input["name"];
                             $inputType = $input["type"];
