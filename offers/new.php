@@ -20,14 +20,15 @@ $allQuizzes = $daoQuiz->findAll();
 $allRespondents = $daoRespondent->findAll();
 
 ?>
-  <script>
-    $(document).ready(function(){
-      $('.datetimepicker').datetimepicker(
-        {format: 'd/m/Y h:i'}
-      
-      );
-    });
-  </script>
+    <script>
+      $(document).ready(function(){
+        $('.datetimepicker').datetimepicker({
+          format: 'd/m/Y H:i a',
+        });
+        
+      });
+    </script>
+
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
