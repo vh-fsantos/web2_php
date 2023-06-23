@@ -16,8 +16,8 @@ if (!$developer)
 $daoQuiz = $factory->getQuizDao();
 $daoRespondent = $factory->getRespondentDao();
 
-$allQuizzes = $daoQuiz->findAll();
-$allRespondents = $daoRespondent->findAll();
+$allQuizzes = $daoQuiz->findAll(0, 10000 , '');
+$allRespondents = $daoRespondent->findAll(0, 10000 , '');
 
 ?>
     <script>
