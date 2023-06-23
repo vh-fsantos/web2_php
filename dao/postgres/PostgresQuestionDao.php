@@ -99,7 +99,7 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
         return $question;
     }
 
-    public function findAll() {
+    public function findAll($offset, $limit, $search) {
 
         $questions = array();
 
@@ -107,9 +107,24 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
                     id, description, question_type, image
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY id ASC";
+                    "";
+
+        if($search !== '') {
+            $query .=" WHERE description LIKE :search";
+        }
+
+        $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
      
         $stmt = $this->conn->prepare( $query );
+
+        if (!empty($search)) {
+            $searchTerm = '%' . $search . '%';
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -200,6 +215,26 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
 
         return $questions;
     }
+
+
+    public function countAll($search){
+
+        $query = "SELECT id FROM " . $this->table_name . "
+            WHERE description LIKE :search
+        ";
+        
+        $searchTerm = '%' . $search . '%';
+        
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':search', $searchTerm);
+
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        return $num;                                            
+    } 
 }
 
 

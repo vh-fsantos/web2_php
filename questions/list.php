@@ -1,66 +1,66 @@
+
 <?php
+  
+  $page_title = "Listagem de Questoes";
+  include_once("../common/facade.php");
+  include_once("../common/header.php");
+  
+?>
+  
 
-// include "verifica.php";
+<section class="container mt-4">
+  <a href="/questions/new.php" class="btn btn-primary mb-3">
+    <span class="fas fa-plus"></span> Criar
+  </a>
 
-$page_title = "Listagem de Questões";
+  <div class="form-group">
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por descricao">
+    <button id="searchButton" class="btn btn-primary mt-3">Pesquisar</button>
+  </div>
 
-include_once "../common/header.php";
-include_once "../common/facade.php";
+  <div id="table" class="table-responsive">
+    <!-- Table content will be loaded here -->
+  </div>
 
-echo "<section class='container mt-4'>";
+  <nav id="pagination" aria-label="Pagination">
+    <ul class="pagination justify-content-center">
+      <!-- Pagination links will be loaded here -->
+    </ul>
+  </nav>
+</section>
 
-// procura questões
+<script>
+  $(document).ready(function() {
+    loadTable(1); // Load initial offers data
 
-$dao = $factory->getQuestionDao();
-$questions = $dao->findAll();
+    function loadTable(page, search = null) {
+      $.ajax({
+        url: 'get.php',
+        type: 'GET',
+        data: { page: page, search: search},
+        dataType: 'html',
+        success: function(data) {
+          $('#table').html(data); // Update table content
+        }
+      });
+    }
 
-// exibe as questões, se houver alguma
+    $(document).on('click', '.pagination .page-link', function(e) {
+      e.preventDefault();
+      var page = $(this).attr('href').split('page=')[1];
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(page, search);
+    });
 
-echo "<a href='/questions/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Criar";
-echo "</a>";
-
-if ($questions) {
-	echo "<div class='table-responsive'>";
-	echo "<table class='table table-hover table-bordered'>";
-	echo "<thead class='thead-light'>";
-	echo "<tr>";
-	echo "<th>Id</th>";
-	echo "<th>Descrição</th>";
-	echo "<th>Tipo</th>";
-	echo "<th>Ações</th>";
-	echo "</tr>";
-	echo "</thead>";
-	echo "<tbody>";
-
-	foreach ($questions as $question) {
-
-		echo "<tr>";
-		echo "<td>{$question->getId()}</td>";
-		echo "<td>{$question->getDescription()}</td>";
-		echo "<td>{$question->getQuestionType()}</td>";
-		echo "<td>";
-		// botão para alterar uma questão
-		echo "<a href='/questions/edit.php?id={$question->getId()}' class='btn btn-info mr-1'>";
-		echo "<span class='fas fa-edit'></span> Alterar";
-		echo "</a>";
-		// botão para remover uma questão
-		echo "<a href='/questions/delete.php?id={$question->getId()}' class='btn btn-danger'";
-		echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-		echo "<span class='fas fa-trash'></span> Excluir";
-		echo "</a>";
-		echo "</td>";
-		echo "</tr>";
-	}
-	echo "</tbody>";
-	echo "</table>";
-	echo "</div>";
-}
- 
+    $('#searchButton').click(function(e) {
+      e.preventDefault();
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(1, search); // Load offers with search term
+    });
+  });
+</script>
 
 
-echo "</section>";
-
-// layout do rodapé
-include_once "../common/footer.php";
+<?php 
+include_once("../common/footer.php");
 ?>

@@ -4,13 +4,13 @@ include_once("../common/facade.php");
 include_once("../common/header.php");
 
 $quizDao = $factory->getQuizDao();
-$quizzes = $quizDao->findAll();
+$quizzes = $quizDao->findAll(0, 10000 , '');
 
 $offerDao = $factory->getOfferDao();
 $offers = $offerDao->findAll();
 
 $submissionDao = $factory->getSubmissionDao();
-$submissions = $submissionDao->findAll();
+$submissions = $submissionDao->findAll(0, 10000 , '');
 
 echo "<section class='container mt-4'>";
 echo "<div class='table-responsive'>";
