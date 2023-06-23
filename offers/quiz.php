@@ -29,6 +29,9 @@ require_once "../common/header.php";
     <div class="form-group">
       <h4>Question <?= $index+1 ?>: <?= $question->getDescription() ?></h4>
       <hr>
+      <?php if ($question->getImage() != '') { ?>
+        <image src="/images/<?php echo $question->getImage(); ?>" style="margin-block-end: 15px; max-height: 200px;"/>
+      <?php } ?>
       <?php if ($question->getQuestionType() === 'essay') { ?>
         <textarea class="form-control" name="question_<?= $question->getId() ?>"></textarea>
       <?php } else { 
