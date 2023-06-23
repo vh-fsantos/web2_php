@@ -13,7 +13,7 @@ $offerDao = $factory->getOfferDao();
 $quizDao = $factory->getQuizDao();
 $respondentDao = $factory->getRespondentDao();
 
-$limit = 5; // Number of offers per page
+$limit = 2; // Number of offers per page
 $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
 $offset = ($page - 1) * $limit; // Calculate the offset
 
