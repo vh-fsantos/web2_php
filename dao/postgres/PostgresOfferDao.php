@@ -130,12 +130,12 @@ class PostgresOfferDao extends DAO implements OfferDao
         $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id, s.date AS submission_date
                 FROM " . $this->table_name . " o
                 LEFT JOIN submission s ON o.id = s.offer_id
-                ORDER BY o.id ASC";
-                // LIMIT :limit OFFSET :offset";
+                ORDER BY o.id ASC
+                LIMIT :limit OFFSET :offset";
 
         $stmt = $this->conn->prepare($query);
-        // $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        // $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
