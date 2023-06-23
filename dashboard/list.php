@@ -1,16 +1,18 @@
 <?php 
 
+$page_title = "Dashboard";
+
 include_once("../common/facade.php");
 include_once("../common/header.php");
 
 $quizDao = $factory->getQuizDao();
-$quizzes = $quizDao->findAll(0, 10000 , '');
+$quizzes = $quizDao->findAll(null, null , '');
 
 $offerDao = $factory->getOfferDao();
 $offers = $offerDao->findAll();
 
 $submissionDao = $factory->getSubmissionDao();
-$submissions = $submissionDao->findAll(0, 10000 , '');
+$submissions = $submissionDao->findAll();
 
 echo "<section class='container mt-4'>";
 echo "<div class='table-responsive'>";

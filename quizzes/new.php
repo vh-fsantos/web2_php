@@ -38,7 +38,7 @@ require_once "../common/header.php";
         <tbody>
           <?php 
           $dao_question = $factory->getQuestionDao();
-          $questions = $dao_question->findAll(0, 10000 , '');
+          $questions = $dao_question->findAll(null, null, '');
           foreach ($questions as $question) {
               echo "<tr>";
               echo "<td><input type='checkbox' name='question_ids[]' value='{$question->getId()}'></td>";

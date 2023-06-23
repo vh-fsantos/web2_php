@@ -113,7 +113,12 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
             $query .=" WHERE description LIKE :search";
         }
 
-        $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
+        $query .= " ORDER BY id ASC";
+
+        if (!is_null($limit) && !is_null($offset)) {
+            $query .= " LIMIT :limit OFFSET :offset";
+        }
+
      
         $stmt = $this->conn->prepare( $query );
 
@@ -122,8 +127,11 @@ class PostgresQuestionDao extends Dao implements QuestionDao {
             $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
         }
 
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        if (!is_null($limit) && !is_null($offset)) {
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        }
 
         $stmt->execute();
 
