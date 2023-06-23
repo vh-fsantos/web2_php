@@ -14,7 +14,7 @@
   </a>
 
   <div class="form-group">
-    <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou email">
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome">
     <button id="searchButton" class="btn btn-primary mt-3">Pesquisar</button>
   </div>
 
