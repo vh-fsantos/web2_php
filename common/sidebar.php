@@ -55,6 +55,9 @@ if (isset($_SESSION["userType"]))
                     echo '<li class="nav-item">';
                     echo '<a class="nav-link" href="/offers/list.php">Ofertas</a>';
                     echo '</li>';
+                    echo '<li class="nav-item">';
+                    echo '<a class="nav-link" href="/dashboard/list.php">Dashboard</a>';
+                    echo '</li>';
                 }?>
                 <?php
                 if ($respondent){
