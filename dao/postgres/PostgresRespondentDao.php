@@ -130,14 +130,29 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         return $respondent;
     }
 
-    public function findAll()
+    public function findAll($offset, $limit, $search)
     {
         $respondents = array();
 
         $query = "SELECT id, login, password, email, phone, name
-                FROM " . $this->table_name . " ORDER BY id ASC";
+                FROM " . $this->table_name . "";
+
+        if($search !== '') {
+            $query .=" WHERE name LIKE :search OR email LIKE :search";
+        }
+
+        $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
      
         $stmt = $this->conn->prepare($query);
+
+        if (!empty($search)) {
+            $searchTerm = '%' . $search . '%';
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -147,6 +162,25 @@ class PostgresRespondentDao extends DAO implements RespondentDao
         
         return $respondents;
     }
+
+    public function countAll($search){
+
+        $query = "SELECT id FROM " . $this->table_name . "
+            WHERE name LIKE :search OR email LIKE :search
+        ";
+        
+        $searchTerm = '%' . $search . '%';
+        
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':search', $searchTerm);
+
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        return $num;                                            
+    }  
 }
 
 ?>

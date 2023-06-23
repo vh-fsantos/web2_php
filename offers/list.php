@@ -26,7 +26,7 @@
     <button id="searchButton" class="btn btn-primary mt-3">Pesquisar</button>
   </div>
 
-  <div id="offersTable" class="table-responsive">
+  <div id="table" class="table-responsive">
     <!-- Table content will be loaded here -->
   </div>
 
@@ -39,16 +39,16 @@
 
 <script>
   $(document).ready(function() {
-    loadOffers(1); // Load initial offers data
+    loadTable(1); // Load initial offers data
 
-    function loadOffers(page, search = null) {
+    function loadTable(page, search = null) {
       $.ajax({
-        url: 'get_offers.php', // PHP file to retrieve offers data
+        url: 'get.php',
         type: 'GET',
         data: { page: page, search: search },
         dataType: 'html',
         success: function(data) {
-          $('#offersTable').html(data); // Update table content
+          $('#table').html(data); // Update table content
         }
       });
     }
@@ -57,13 +57,13 @@
       e.preventDefault();
       var page = $(this).attr('href').split('page=')[1];
       var search = $('#searchInput').val(); // Get search term from input field
-      loadOffers(page, search);
+      loadTable(page, search);
     });
 
     $('#searchButton').click(function(e) {
       e.preventDefault();
       var search = $('#searchInput').val(); // Get search term from input field
-      loadOffers(1, search); // Load offers with search term
+      loadTable(1, search); // Load offers with search term
     });
   });
 </script>

@@ -68,8 +68,8 @@ if ($offers) {
   echo '</table>';
 
   // Pagination links
-  $totalOffers = $offerDao->countAll($search); // Total number of offers
-  $totalPages = ceil($totalOffers / $limit); // Calculate total number of pages
+  $total = $offerDao->countAll($search); // Total number of offers
+  $totalPages = ceil($total / $limit); // Calculate total number of pages
   echo '<ul class="pagination">';
  
   for ($i = 1; $i <= $totalPages; $i++) {
@@ -78,6 +78,6 @@ if ($offers) {
   
   echo '</ul>';
 } else {
-  echo '<p>No offers found.</p>';
+  echo '<p>No data found for "'.$search.'".</p>';
 }
 ?>

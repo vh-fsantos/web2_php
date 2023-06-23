@@ -8,7 +8,8 @@ interface RespondentDao
     public function update($respondent);
     public function findById($id);
     public function findByLogin($login);
-    public function findAll();
+    public function findAll($offset, $limit, $search);
+    public function countAll($search);
     
 }
 

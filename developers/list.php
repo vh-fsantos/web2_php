@@ -1,98 +1,74 @@
+
+<?php
+  
+  $page_title = "Listagem de Elaboradores";
+  include_once("../common/facade.php");
+  include_once("../common/header.php");
+  $isAdmin = FALSE;
+  if (!$developer) {
+      header("location: /index.php");
+      exit;
+  }
+  $isAdmin = $_SESSION["isAdmin"]; 
+?>
+  
+  
+  
+ 
+
+<section class="container mt-4">
+  <a href="/developers/new.php" class="btn btn-primary mb-3">
+    <span class="fas fa-plus"></span> Criar
+  </a>
+
+  <div class="form-group">
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou email">
+    <button id="searchButton" class="btn btn-primary mt-3">Pesquisar</button>
+  </div>
+
+  <div id="table" class="table-responsive">
+    <!-- Table content will be loaded here -->
+  </div>
+
+  <nav id="pagination" aria-label="Pagination">
+    <ul class="pagination justify-content-center">
+      <!-- Pagination links will be loaded here -->
+    </ul>
+  </nav>
+</section>
+
+<script>
+  $(document).ready(function() {
+    loadTable(1); // Load initial offers data
+
+    function loadTable(page, search = null) {
+      $.ajax({
+        url: 'get.php',
+        type: 'GET',
+        data: { page: page, search: search },
+        dataType: 'html',
+        success: function(data) {
+          $('#table').html(data); // Update table content
+        }
+      });
+    }
+
+    $(document).on('click', '.pagination .page-link', function(e) {
+      e.preventDefault();
+      var page = $(this).attr('href').split('page=')[1];
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(page, search);
+    });
+
+    $('#searchButton').click(function(e) {
+      e.preventDefault();
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(1, search); // Load offers with search term
+    });
+  });
+</script>
+
+
 <?php 
-
-$page_title = "Listagem de Elaboradores";
-
-include_once("../common/facade.php");
-include_once("../common/header.php");
-
-if (!isset($_SESSION["isAdmin"]) || !$_SESSION["isAdmin"])
-{
-  header("location: /index.php");
-  exit;
-} 
-
-echo "<section class='container mt-4'>";
-
-$dao = $factory->getDeveloperDao();
-$developers = $dao->findAll();
-
-echo "<a href='/developers/new.php' class='btn btn-primary mb-3'>";
-echo "<span class='fas fa-plus'></span> Criar";
-echo "</a>";
-
-if ($developers)
-{
-  echo "<div class='table-responsive'>";
-  echo "<table class='table table-hover table-bordered'>";
-	echo "<thead class='thead-light'>";
-	echo "<tr>";
-	echo "<th>Id</th>";
-	echo "<th>Login</th>";
-	echo "<th>Nome</th>";
-	echo "<th>Email</th>";
-  echo "<th>Instituição</th>";
-  echo "<th>Admnistrador</th>";
-  echo "<th>Ações</th>";
-	echo "</tr>";
-	echo "</thead>";
-	echo "<tbody>";
-
-	foreach ($developers as &$dev) {
-    $adminText = $dev->getIsAdmin() ? 'True' : 'False';
-
-		echo "<tr>";
-		echo "<td>{$dev->getId()}</td>";
-		echo "<td>{$dev->getLogin()}</td>";
-		echo "<td>{$dev->getName()}</td>";
-    echo "<td>{$dev->getEmail()}</td>";
-    echo "<td>{$dev->getInstitution()}</td>";
-    echo "<td>{$adminText}</td>";
-    echo "<td>";
-    echo "<button class='update-button btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#update-modal'>";
-    echo "<span class='fas fa-edit'></span> Alterar";
-    echo "</button>";
-    echo "<a href='/developers/delete.php?id={$dev->getId()}' class='btn btn-danger mr-1'";
-    echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-    echo "<span class='fas fa-trash'></span> Excluir";
-    echo "</a>";
-    echo "</td>";
-		echo "</tr>";
-	}
-
-  echo "</tbody>";
-	echo "</table>";
-  echo "</div>";
-}
-
-echo "</section>";
-
-$idForm = "create-form";
-$modalTitle = "Criar Elaborador";
-$modalAction = "/developers/create.php";
-$modalSubmitText = "Criar";
-$modalInputs = [ array("label" => "Login", "type" => "text", "name" => "login"),
-                array("label" => "Password", "type" => "password", "name" => "password"),
-                array("label" => "Email", "type" => "email", "name" => "email"),
-                array("label" => "Nome", "type" => "text", "name" => "name"),
-                array("label" => "Instituição", "type" => "text", "name" => "institution")
-];
-$modalId = "create-modal";
-
-include("../common/modal.php");
-
-$idForm = "update-form";
-$modalTitle = "Atualizar Cadastro";
-$modalAction = "/developers/update.php";
-$modalSubmitText = "Atualizar";
-$modalInputs = [ array("label" => "Login", "type" => "text", "name" => "login"),
-                array("label" => "Password", "type" => "password", "name" => "password"),
-                array("label" => "Email", "type" => "email", "name" => "email"),
-                array("label" => "Nome", "type" => "text", "name" => "name"),
-                array("label" => "Instituição", "type" => "text", "name" => "institution")
-];
-$modalId = "update-modal";
-
-include("../common/modal.php");
-
-include_once("../common/footer.php"); 
+include_once("../common/footer.php");
 ?>

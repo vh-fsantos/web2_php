@@ -1,86 +1,74 @@
-<?php 
 
-$page_title = "Listagem de Respondentes";
+<?php
+  
+  $page_title = "Listagem de Elaboradores";
+  include_once("../common/facade.php");
+  include_once("../common/header.php");
 
-include_once("../common/facade.php");
-include_once("../common/header.php");
-
-$isAdmin = FALSE;
-
-if (!$developer)
-{
-  header("location: /index.php");
-  exit;
-}
-
-
-$isAdmin = $_SESSION["isAdmin"];
-
-echo "<section class='container mt-4'>";
-
-$dao = $factory->getRespondentDao();
-$respondents = $dao->findAll();
-
-if ($isAdmin)
-{
-  echo "<a href='/respondents/new.php' class='btn btn-primary mb-3'>";
-  echo "<span class='fas fa-plus'></span> Criar";
-  echo "</a>";
-}
-
-if ($respondents)
-{
-  echo "<div class='table-responsive'>";
-  echo "<table class='table table-hover table-bordered'>";
-	echo "<thead class='thead-light'>";
-	echo "<tr>";
-	echo "<th>Id</th>";
-	echo "<th>Login</th>";
-	echo "<th>Nome</th>";
-	echo "<th>Email</th>";
-  echo "<th>Telefone</th>";
-  if ($isAdmin)
-  {
-    echo "<th>Ações</th>";
+  if (!$developer) {
+      header("location: /index.php");
+      exit;
   }
-	echo "</tr>";
-	echo "</thead>";
-	echo "<tbody>";
 
-	foreach ($respondents as &$resp) {
-		echo "<tr>";
-		echo "<td>{$resp->getId()}</td>";
-		echo "<td>{$resp->getLogin()}</td>";
-		echo "<td>{$resp->getName()}</td>";
-    echo "<td>{$resp->getEmail()}</td>";
-    echo "<td>{$resp->getPhone()}</td>";
+  $isAdmin = $_SESSION["isAdmin"] ? 1 : 0; 
 
-    if ($isAdmin)
-    {
-      echo "<td>";
-      // echo "<a href='/respondents/update.php?id={$resp->getId()}' class='btn btn-info mr-1'>";
-      echo "<button class='btn btn-info mr-1' disabled>";
-      echo "<span class='fas fa-edit'></span> Alterar";
-      echo "</button>";
-      // echo "</a>";
-      echo "<a href='/respondents/delete.php?id={$resp->getId()}' class='btn btn-danger mr-1'";
-      echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
-      echo "<span class='fas fa-trash'></span> Excluir";
-      echo "</a>";
-      echo "</td>";
+  
+?>
+  
+
+<section class="container mt-4">
+  <a href="/respondents/new.php" class="btn btn-primary mb-3">
+    <span class="fas fa-plus"></span> Criar
+  </a>
+
+  <div class="form-group">
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou email">
+    <button id="searchButton" class="btn btn-primary mt-3">Pesquisar</button>
+  </div>
+
+  <div id="table" class="table-responsive">
+    <!-- Table content will be loaded here -->
+  </div>
+
+  <nav id="pagination" aria-label="Pagination">
+    <ul class="pagination justify-content-center">
+      <!-- Pagination links will be loaded here -->
+    </ul>
+  </nav>
+</section>
+
+<script>
+  $(document).ready(function() {
+    loadTable(1); // Load initial offers data
+
+    function loadTable(page, search = null) {
+      $.ajax({
+        url: 'get.php',
+        type: 'GET',
+        data: { page: page, search: search, isAdmin: <?php echo $isAdmin ?> },
+        dataType: 'html',
+        success: function(data) {
+          $('#table').html(data); // Update table content
+        }
+      });
     }
 
-		echo "</tr>";
-	}
+    $(document).on('click', '.pagination .page-link', function(e) {
+      e.preventDefault();
+      var page = $(this).attr('href').split('page=')[1];
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(page, search);
+    });
 
-  echo "</tbody>";
-	echo "</table>";
-  echo "</div>";
-}
+    $('#searchButton').click(function(e) {
+      e.preventDefault();
+      var search = $('#searchInput').val(); // Get search term from input field
+      loadTable(1, search); // Load offers with search term
+    });
+  });
+</script>
 
-echo "</section>";
-include_once("../common/footer.php"); 
+
+<?php 
+include_once("../common/footer.php");
 ?>
-
-
-

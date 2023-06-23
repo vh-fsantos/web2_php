@@ -8,7 +8,7 @@ interface DeveloperDao
     public function update($developer);
     public function findById($id);
     public function findByLogin($login);
-    public function findAll();
+    public function findAll($offset, $limit, $search);
     public function countAll($search);
 }
 

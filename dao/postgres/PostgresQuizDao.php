@@ -101,7 +101,7 @@ class PostgresQuizDao extends DAO implements QuizDao {
 
     
 
-    public function findAll() {
+    public function findAll($offset, $limit, $search) {
 
         $quizes = array();
 
@@ -109,9 +109,25 @@ class PostgresQuizDao extends DAO implements QuizDao {
                     id, name, description, minimum_score, date_create
                 FROM
                     " . $this->table_name . 
-                    " ORDER BY id ASC";
+                    "";
      
+        if($search !== '') {
+            $query .=" WHERE name LIKE :search";
+        }
+
+        $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
+
         $stmt = $this->conn->prepare( $query );
+
+        if (!empty($search)) {
+            $searchTerm = '%' . $search . '%';
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -121,6 +137,26 @@ class PostgresQuizDao extends DAO implements QuizDao {
         
         return $quizes;
     }
+
+
+    public function countAll($search){
+
+        $query = "SELECT id FROM " . $this->table_name . "
+            WHERE name LIKE :search
+        ";
+        
+        $searchTerm = '%' . $search . '%';
+        
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':search', $searchTerm);
+
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        return $num;                                            
+    } 
 }
 
 

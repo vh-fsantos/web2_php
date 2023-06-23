@@ -129,14 +129,29 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         return $developer;
     }
 
-    public function findAll()
+    public function findAll($offset, $limit, $search)
     {
         $developers = array();
 
         $query = "SELECT id, login, password, email, institution, is_admin, name 
-                  FROM " . $this->table_name . " ORDER BY id ASC";
-     
+                  FROM " . $this->table_name . "";
+        
+        if($search !== '') {
+            $query .=" WHERE name LIKE :search OR email LIKE :search";
+        }
+
+        $query .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
+
         $stmt = $this->conn->prepare( $query );
+
+        if (!empty($search)) {
+            $searchTerm = '%' . $search . '%';
+            $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){

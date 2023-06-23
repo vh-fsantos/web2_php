@@ -6,7 +6,8 @@ interface QuizDao {
     public function removeById($id);
     public function update($quiz);
     public function findById($id);
-    public function findAll();
+    public function findAll($offset, $limit, $search);
+    public function countAll($search);
 }
 
 ?>
