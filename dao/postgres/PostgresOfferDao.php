@@ -17,7 +17,8 @@ class PostgresOfferDao extends DAO implements OfferDao
         $stmt = $this->conn->prepare($query);
         $dateString = $offer->getDate();
 
-        $date = DateTime::createFromFormat('d/m/Y h:i a', $dateString);
+        $date = DateTime::createFromFormat('d/m/Y H:i a', $dateString);
+
         $formattedDate = $date->format('Y-m-d H:i:s');
         $quiz_id = $offer->getQuiz()->getId();
         $respondent_id = $offer->getRespondent()->getId();
