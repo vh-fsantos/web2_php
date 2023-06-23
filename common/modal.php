@@ -1,16 +1,19 @@
 <script>
     $(document).ready(function() {
         $(".update-button").click(function() {
-            console.log('entrou')
             let form = $('#<?php echo $idForm; ?>')
-
-            if (form.attr('action') !== undefined)
-                form.removeAttr('action')
-            
-            var dataValue = $(this).data('value')
-            var actionUrl = `<?php echo $modalAction; ?>?id=${dataValue}`
+            let dataValue = $(this).data('value')
+            let actionUrl = `<?php echo $modalAction; ?>?id=${dataValue}`
             form.attr('action', actionUrl)
-        });
+        })
+        $(".close").click(function() {
+            let form = $('#<?php echo $idForm; ?>')
+            form.removeAttr('action')
+            let inputs = form.querySelectorAll('input')
+            inputs.array.forEach(input => {
+                input.value = ''
+            });
+        })
     })
 </script>
 
