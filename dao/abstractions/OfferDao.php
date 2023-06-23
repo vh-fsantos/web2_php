@@ -8,8 +8,8 @@ interface OfferDao
     public function update($offer);
     public function findById($id);
     public function findAll();
-    public function findAllWithSubmissionInfo($offset, $limit);
-    public function countAll();
+    public function findAllWithSubmissionInfo($offset, $limit, $search);
+    public function countAll($search);
     public function findAllWithSubmissionInfoAndFilterByDate($respondent_id);
 }
 
