@@ -1,3 +1,4 @@
+
 <script>
     $(document).ready(function() {
         $(".update-button").click(function() {
@@ -5,7 +6,7 @@
             let dataValue = $(this).data('value')
             let actionUrl = `<?php echo $modalAction; ?>?id=${dataValue}`
             form.attr('action', actionUrl)
-        })
+            })
         $(".close").click(function() {
             let form = $('#<?php echo $idForm; ?>')
             form.removeAttr('action')
@@ -17,7 +18,7 @@
     })
 </script>
 
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="updateModal">
+<div class="modal fade" id="<?php echo $modalId; ?>" tabindex="-1" role="dialog" aria-labelledby="updateModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,6 +39,8 @@
                             <input type="<?php echo $inputType; ?>" class="form-control" id="<?php echo $inputName; ?>" name="<?php echo $inputName; ?>" required>
                         </div>
                     <?php } ?>
+                    <?php $variavelphp = "<script>document.write(dataValue)</script>"; 
+                    echo $variavelphp?>
                     <button type="submit" class="btn btn-primary"><?php echo $modalSubmitText; ?></button>
                 </form>
             </div>

@@ -48,7 +48,7 @@ if ($developers)
     echo "<td>{$dev->getInstitution()}</td>";
     echo "<td>{$adminText}</td>";
     echo "<td>";
-    echo "<button class='update-button btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#modal'>";
+    echo "<button class='update-button btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#update-modal'>";
     echo "<span class='fas fa-edit'></span> Alterar";
     echo "</button>";
     echo "<a href='/developers/delete.php?id={$dev->getId()}' class='btn btn-danger mr-1'";
@@ -66,6 +66,20 @@ if ($developers)
 
 echo "</section>";
 
+$idForm = "create-form";
+$modalTitle = "Criar Elaborador";
+$modalAction = "/developers/create.php";
+$modalSubmitText = "Criar";
+$modalInputs = [ array("label" => "Login", "type" => "text", "name" => "login"),
+                array("label" => "Password", "type" => "password", "name" => "password"),
+                array("label" => "Email", "type" => "email", "name" => "email"),
+                array("label" => "Nome", "type" => "text", "name" => "name"),
+                array("label" => "Instituição", "type" => "text", "name" => "institution")
+];
+$modalId = "create-modal";
+
+include("../common/modal.php");
+
 $idForm = "update-form";
 $modalTitle = "Atualizar Cadastro";
 $modalAction = "/developers/update.php";
@@ -76,8 +90,9 @@ $modalInputs = [ array("label" => "Login", "type" => "text", "name" => "login"),
                 array("label" => "Nome", "type" => "text", "name" => "name"),
                 array("label" => "Instituição", "type" => "text", "name" => "institution")
 ];
+$modalId = "update-modal";
 
-include_once("../common/modal.php");
+include("../common/modal.php");
 
 include_once("../common/footer.php"); 
 ?>
