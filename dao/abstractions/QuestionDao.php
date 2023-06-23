@@ -8,6 +8,7 @@ interface QuestionDao {
     public function findById($id);
     public function findAll();
     public function findAllByQuizId($quiz_id);
+    
 }
 
 ?>

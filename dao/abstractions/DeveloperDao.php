@@ -9,6 +9,7 @@ interface DeveloperDao
     public function findById($id);
     public function findByLogin($login);
     public function findAll();
+    public function countAll($search);
 }
 
 ?>

@@ -146,6 +146,28 @@ class PostgresDeveloperDao extends DAO implements DeveloperDao
         
         return $developers;
     }
+
+
+    public function countAll($search){
+
+        $query = "SELECT id FROM " . $this->table_name . "
+            WHERE name LIKE :search OR email LIKE :search
+        ";
+        
+        $searchTerm = '%' . $search . '%';
+        
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':search', $searchTerm);
+
+        $stmt->execute();
+        
+        $num = $stmt->rowCount();
+        
+        return $num;                                            
+    }  
+
+    
 }
 
 ?>

@@ -123,19 +123,23 @@ class PostgresOfferDao extends DAO implements OfferDao
         return $offers;
     }
 
-    public function findAllWithSubmissionInfo($offset, $limit)
+    public function findAllWithSubmissionInfo($offset, $limit, $search)
     {
         $offers = array();
 
         $query = "SELECT o.id, o.date, o.quiz_id, o.respondent_id, s.id AS submission_id, s.date AS submission_date
-                FROM " . $this->table_name . " o
-                LEFT JOIN submission s ON o.id = s.offer_id
-                ORDER BY o.id ASC
-                LIMIT :limit OFFSET :offset";
+            FROM " . $this->table_name . " o
+            LEFT JOIN submission s ON o.id = s.offer_id
+            LEFT JOIN respondent r ON o.respondent_id = r.id
+            WHERE r.name LIKE :search OR r.email LIKE :search
+            ORDER BY o.id ASC
+            LIMIT :limit OFFSET :offset";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit);
+        $stmt->bindParam(':offset', $offset);
+        $searchTerm = '%' . $search . '%';
+        $stmt->bindParam(':search', $searchTerm);
         $stmt->execute();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -196,11 +200,19 @@ class PostgresOfferDao extends DAO implements OfferDao
 
     }
 
-    public function countAll(){
+    public function countAll($search){
 
-        $query = "SELECT id FROM " . $this->table_name . "";
+        $query = "SELECT o.id, o.respondent_id FROM " . $this->table_name . " o
+            INNER JOIN respondent r ON o.respondent_id = r.id
+            WHERE r.name LIKE :search OR r.email LIKE :search
+        ";
+        
+        $searchTerm = '%' . $search . '%';
         
         $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':search', $searchTerm);
+
         $stmt->execute();
         
         $num = $stmt->rowCount();

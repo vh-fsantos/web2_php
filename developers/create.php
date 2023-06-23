@@ -14,7 +14,7 @@ $dao->create($developer);
 
 echo '<script>alert("Mensagem")</script>';
 
-header("location: /index.php");
+header("location: /developers/list.php");
 exit;
 
 ?>
