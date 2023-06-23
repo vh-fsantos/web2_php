@@ -65,8 +65,14 @@ require_once "../common/header.php";
 			</div>
 			
 			<div class="form-group">
+				<?php if ($question->getImage() != '') { ?>
+					<p>Imagem atual:</p>
+					<image src="/images/<?php echo $question->getImage(); ?>" style="margin-block-end: 15px; max-height: 200px;"/>
+				<?php } ?>
+				<div>
 				<label for="image">Imagem:</label>
-				<input type="file" class="form-control-file" id="image" name="image">
+				<input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+				</div>
 			</div>
 			<input type='hidden' name='id' value='<?php echo $question->getId();?>'/>
 			<button type="submit" class="btn btn-primary">Salvar</button>

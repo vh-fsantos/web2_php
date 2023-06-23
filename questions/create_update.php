@@ -45,7 +45,7 @@ if($question===null) {
     $question->setId($id);
     $question->setDescription($description);
     $question->setQuestionType($question_type);
-    $question->setImage($image);
+    $question->setImage($fileName);
     $dao->update($question);
 
     $dao_alternative = $factory->getAlternativeDao();
