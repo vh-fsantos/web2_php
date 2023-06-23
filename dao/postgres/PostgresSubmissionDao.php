@@ -75,10 +75,11 @@ class PostgresSubmissionDao extends Dao implements SubmissionDao {
         $submissions = array();
 
         $query = "SELECT
-                    id, description, submission_type, image
-                FROM
-                    " . $this->table_name . 
-                    " ORDER BY id ASC";
+                    s.id, s.date, s.offer_id, o.quiz_id
+                FROM " . $this->table_name . " as s
+                    LEFT JOIN offer o ON o.id = s.offer_id
+                    LEFT JOIN quiz q ON q.id = o.quiz_id
+                    ORDER BY id ASC";
      
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();
@@ -86,6 +87,7 @@ class PostgresSubmissionDao extends Dao implements SubmissionDao {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $offer = new Offer($offer_id, null);
+            $offer->setQuiz(new Quiz($quiz_id, null, null, null, null));
             $submission = new Submission($id,$date);
             $submission->setOffer($offer);
             $submissions[] = $submission;
