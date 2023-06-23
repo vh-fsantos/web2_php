@@ -1,5 +1,7 @@
 <?php 
 
+include_once("../common/facade.php");
+
 $id = @$_GET["id"];
 $login = @$_POST["login"];
 $password = @$_POST["password"];
@@ -16,6 +18,7 @@ if ($developer !== null){
     $developer->setName($name);
     $developer->setEmail($email);
     $developer->setInstitution($institution);
+    $dao->update($developer);
 }
 
 header("location: /developers/list.php");

@@ -70,15 +70,14 @@ $idForm = "update-form";
 $modalTitle = "Atualizar Cadastro";
 $modalAction = "/developers/update.php";
 $modalSubmitText = "Atualizar";
-$modalInputs = [ array("name" => "Login", "type" => "text"),
-                array("name" => "Password", "type" => "password"),
-                array("name" => "Email", "type" => "email"),
-                array("name" => "Nome", "type" => "text"),
-                array("name" => "Instituição", "type" => "text")
+$modalInputs = [ array("label" => "Login", "type" => "text", "name" => "login"),
+                array("label" => "Password", "type" => "password", "name" => "password"),
+                array("label" => "Email", "type" => "email", "name" => "email"),
+                array("label" => "Nome", "type" => "text", "name" => "name"),
+                array("label" => "Instituição", "type" => "text", "name" => "institution")
 ];
 
 include_once("../common/modal.php");
-
 
 include_once("../common/footer.php"); 
 ?>

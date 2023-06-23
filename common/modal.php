@@ -30,10 +30,11 @@
                 <form id="<?php echo $idForm; ?>" method="post">
                     <?php foreach ($modalInputs as $input) { 
                             $inputName = $input["name"];
+                            $inputLabel = $input["label"];
                             $inputType = $input["type"];
                         ?>
                         <div class="form-group">
-                            <label for="<?php echo strtolower($inputName); ?>"><?php echo $inputName; ?></label>
+                            <label for="<?php echo $inputName; ?>"><?php echo $inputLabel; ?></label>
                             <input type="<?php echo $inputType; ?>" class="form-control" id="<?php echo $inputName; ?>" name="<?php echo $inputName; ?>" required>
                         </div>
                     <?php } ?>
