@@ -2,7 +2,7 @@
 
 include_once("../common/facade.php");
 
-$id = @$_GET["id"];
+$id = @$_POST["id"];
 $login = @$_POST["login"];
 $password = @$_POST["password"];
 $name = @$_POST["name"];

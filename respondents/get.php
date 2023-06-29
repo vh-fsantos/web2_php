@@ -42,11 +42,9 @@ if ($respondents) {
     if ($isAdmin)
     {
       echo "<td>";
-      // echo "<a href='/respondents/update.php?id={$resp->getId()}' class='btn btn-info mr-1'>";
-      echo "<button class='btn btn-info mr-1' disabled>";
+      echo "<a href='/respondents/edit.php?id={$resp->getId()}' class='btn btn-info mr-1'>";
       echo "<span class='fas fa-edit'></span> Alterar";
-      echo "</button>";
-      // echo "</a>";
+      echo "</a>";
       echo "<a href='/respondents/delete.php?id={$resp->getId()}' class='btn btn-danger mr-1'";
       echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
       echo "<span class='fas fa-trash'></span> Excluir";
