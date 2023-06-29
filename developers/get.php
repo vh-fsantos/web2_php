@@ -39,10 +39,10 @@ if ($developers) {
     echo "<td>{$dev->getInstitution()}</td>";
     echo "<td>{$adminText}</td>";
     echo "<td>";
-    echo "<button class='update-button btn btn-info mr-1' data-value={$dev->getId()} data-toggle='modal' data-target='#update-modal'>";
+    echo "<a href='/developers/edit.php?id={$dev->getId()}' class='btn btn-info mr-1'>";
     echo "<span class='fas fa-edit'></span> Alterar";
-    echo "</button>";
-    echo "<a href='/developers/delete.php?id={$dev->getId()}' class='btn btn-danger mr-1'";
+    echo "</a>";
+    echo "<a href='/developers/delete.php?id={$dev->getId()}' class='btn btn-danger ml-1'";
     echo "onclick=\"return confirm('Tem certeza que quer excluir?')\">";
     echo "<span class='fas fa-trash'></span> Excluir";
     echo "</a>";

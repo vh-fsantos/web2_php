@@ -14,7 +14,7 @@ $developer = $dao->findById($id);
 
 if ($developer !== null){
     $developer->setLogin($login);
-    $developer->setPassword($password);
+    $developer->setPassword(md5($password));
     $developer->setName($name);
     $developer->setEmail($email);
     $developer->setInstitution($institution);

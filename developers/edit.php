@@ -21,19 +21,19 @@ $developer = $dao->findById($id);
             </div>
             <div class="form-group">
               <label for="password">Senha</label>
-              <input type="password" class="form-control" id="password" name="password" required value="<?php echo $developer->getPassword();?>">
+              <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required value="">
+              <input type="email" class="form-control" id="email" name="email" required value="<?php echo $developer->getEmail();?>">
             </div>
             <div class="form-group">
               <label for="name">Nome</label>
-              <input type="text" class="form-control" id="name" name="name" required>
+              <input type="text" class="form-control" id="name" name="name" required value="<?php echo $developer->getName();?>">
             </div>
             <div class="form-group">
               <label for="institution">Instituição</label>
-              <input type="text" class="form-control" id="institution" name="institution" required>
+              <input type="text" class="form-control" id="institution" name="institution" required value="<?php echo $developer->getInstitution();?>">
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
           </form>
