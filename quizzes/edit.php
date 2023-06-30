@@ -76,3 +76,7 @@ require_once "../common/header.php";
     <button type="submit" class="btn btn-primary">Salvar</button>
   </form>
 </div>
+
+<?php 
+include_once("../common/footer.php");
+?>

@@ -18,8 +18,6 @@ if(!$login || !$password)
 $dao = $factory->getRespondentDao();
 $respondent = $dao->findByLogin($login);
 
-$errors = FALSE;
-
 if ($respondent)
 {
     if(!strcmp($password, $respondent->getPassword())) 
@@ -30,15 +28,10 @@ if ($respondent)
         $_SESSION["isAdmin"]= FALSE;
         header("location: /offers/list_respondents.php");
         exit;
-    } 
-    else
-        $errors = TRUE;
+    }
 }
 
-if ($errors == TRUE)
-{
-    header("location: /index.php");
-    exit;
-}
+header("location: /index.php");
+exit;
 
 ?>
